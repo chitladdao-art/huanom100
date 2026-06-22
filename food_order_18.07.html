@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>หัวนม100%</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Sarabun,sans-serif;background:#fdf6ee;color:#2c1a0e}
+.tabs{display:flex;background:#2c1a0e}
+.tab-btn{flex:1;padding:12px;color:#ccc;border:none;background:none;font-size:14px;cursor:pointer;font-family:Sarabun,sans-serif}
+.tab-btn.active{color:#f5c842;border-bottom:3px solid #f5c842}
+.hdr{background:#2c1a0e;padding:16px;text-align:center}
+.hdr h1{color:#f5c842;font-size:22px}
+.hdr p{color:#ccc;font-size:12px}
+.tbadge{display:inline-block;background:#f5c842;color:#2c1a0e;padding:4px 14px;border-radius:20px;font-size:13px;margin-top:6px;font-weight:bold}
+.catnav{display:flex;overflow-x:auto;background:white;border-bottom:2px solid #f0f0f0;padding:0 8px;position:sticky;top:0;z-index:50;scrollbar-width:none}
+.catnav::-webkit-scrollbar{display:none}
+.catbtn{flex-shrink:0;padding:10px 12px;font-size:15px;font-family:Sarabun,sans-serif;border:none;background:none;color:#888;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-2px}
+.catbtn.active{color:#2c1a0e;font-weight:bold;border-bottom-color:#f5c842}
+.sec-title{padding:10px 16px;font-size:17px;font-weight:bold;color:#2c1a0e;background:#f5c842;margin:10px 0 4px;border-left:5px solid #2c1a0e}
+.mgrid{display:flex;flex-direction:column;padding:0 12px 4px;gap:6px}
+.mcard{background:white;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;align-items:center;padding:10px 12px;gap:10px;cursor:pointer}
+.memoji{font-size:22px;min-width:30px;text-align:center}
+.minfo{flex:1}
+.mname{font-size:16px;font-weight:bold}
+.mprice{color:#c0392b;font-size:15px;margin-top:2px}
+.marrow{color:#ccc;font-size:18px}
+.qbadge{background:#f5c842;color:#2c1a0e;border-radius:50%;width:22px;height:22px;font-size:12px;font-weight:bold;display:none;align-items:center;justify-content:center}
+.cartbar{position:fixed;bottom:0;left:0;right:0;background:#2c1a0e;color:white;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;z-index:100;transform:translateY(100%);transition:transform .3s}
+.cartbar.visible{transform:translateY(0)}
+.cartbtn{background:#f5c842;color:#2c1a0e;border:none;padding:10px 20px;border-radius:8px;font-weight:bold;cursor:pointer;font-size:15px;font-family:Sarabun,sans-serif}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200}
+.overlay.open{display:flex;align-items:flex-end}
+.modal{background:white;border-radius:20px 20px 0 0;padding:20px;width:100%;max-height:80vh;overflow-y:auto}
+.modal h2{font-size:17px;margin-bottom:14px}
+.optgrp{margin-bottom:14px}
+.optgrp-title{font-size:13px;font-weight:bold;color:#555;margin-bottom:8px}
+.optchoices{display:flex;flex-wrap:wrap;gap:8px}
+.optbtn{padding:8px 14px;border-radius:20px;border:2px solid #ddd;background:white;font-size:13px;cursor:pointer;font-family:Sarabun,sans-serif}
+.optbtn.sel{border-color:#2c1a0e;background:#2c1a0e;color:#f5c842}
+.qtysel{display:flex;align-items:center;justify-content:center;gap:16px;margin:14px 0;background:#f9f9f9;border-radius:12px;padding:10px}
+.qtysel button{width:36px;height:36px;border-radius:50%;border:none;font-size:20px;cursor:pointer;background:#f5c842;color:#2c1a0e;font-weight:bold}
+.qtysel span{font-size:20px;font-weight:bold;min-width:30px;text-align:center}
+.cfmbtn{width:100%;background:#2c1a0e;color:#f5c842;border:none;padding:14px;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:10px;font-family:Sarabun,sans-serif}
+.cancbtn{width:100%;background:#eee;color:#555;border:none;padding:12px;border-radius:10px;font-size:14px;cursor:pointer;margin-top:8px;font-family:Sarabun,sans-serif}
+.oitem{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0f0;gap:8px}
+.oitem-info{flex:1;font-size:13px}
+.oitem-name{font-weight:bold;margin-bottom:2px}
+.oitem-opt{color:#888;font-size:12px}
+.oitem-price{color:#c0392b;font-size:13px;font-weight:bold}
+.oitem-ctrl{display:flex;align-items:center;gap:6px}
+.oedit{width:28px;height:28px;border-radius:50%;border:none;font-size:14px;cursor:pointer;font-weight:bold}
+.oedit.m{background:#eee;color:#555}
+.oedit.p{background:#f5c842;color:#2c1a0e}
+.oedit.d{background:#fee;color:#c0392b;font-size:11px}
+.oqty{font-size:14px;font-weight:bold;min-width:20px;text-align:center}
+.ototal{display:flex;justify-content:space-between;padding:12px 0;font-weight:bold;font-size:16px}
+.success{display:none;position:fixed;inset:0;background:#fdf6ee;z-index:300;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px}
+.success.show{display:flex}
+.sending{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:400;flex-direction:column;align-items:center;justify-content:center;color:white;font-size:18px;gap:16px}
+.sending.show{display:flex}
+.spin{width:48px;height:48px;border:5px solid rgba(255,255,255,.3);border-top-color:#f5c842;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#staffView{display:none;padding:16px}
+.shdr{background:#2c1a0e;color:#f5c842;padding:16px;border-radius:10px;text-align:center;margin-bottom:16px}
+.ocols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.coltitle{font-size:14px;font-weight:bold;text-align:center;padding:6px;border-radius:6px;margin-bottom:8px}
+.col-new .coltitle{background:#ffeaa7;color:#856404}
+.col-do .coltitle{background:#ffd3b6;color:#c0392b}
+.col-done .coltitle{background:#d4edda;color:#155724}
+.ocard{background:white;border-radius:8px;padding:10px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.1);font-size:14px}
+.ocard-table{font-weight:bold;font-size:15px;margin-bottom:2px}
+.ocard-time{color:#888;margin-bottom:4px}
+.ocard-items{color:#444;margin-bottom:6px;line-height:1.6}
+.ocard-price{font-weight:bold;color:#c0392b;margin-bottom:6px}
+.sbtn{width:100%;padding:6px;border:none;border-radius:6px;font-size:13px;cursor:pointer;font-family:Sarabun,sans-serif;font-weight:bold}
+.sbtn-do{background:#ffd3b6;color:#c0392b}
+.sbtn-done{background:#d4edda;color:#155724}
+.empty{text-align:center;color:#ccc;font-size:12px;padding:20px 0}
+#setupView{display:none;padding:20px}
+.scard{background:white;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.sinput{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px;font-family:Sarabun,sans-serif;margin-bottom:10px}
+.setupbtn{background:#2c1a0e;color:#f5c842;border:none;padding:10px 20px;border-radius:8px;font-size:14px;cursor:pointer;font-family:Sarabun,sans-serif;font-weight:bold}
+.smsg{margin-top:10px;font-size:13px;padding:8px;border-radius:6px}
+.ok{background:#d4edda;color:#155724}
+.err{background:#f8d7da;color:#721c24}
+.qrgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.qritem{text-align:center;background:#fdf6ee;border-radius:8px;padding:12px}
+.qritem img{width:100%;max-width:120px}
+.qrlabel{font-size:13px;font-weight:bold;margin-top:6px}
+.sp{height:80px}
+</style>
+</head>
+<body>
+<div class="tabs" id="tabBar">
+  <button class="tab-btn active" onclick="showTab('c')">🍽️ เมนู</button>
+  <button class="tab-btn" onclick="showTab('s')">👨‍🍳 พนักงาน</button>
+  <button class="tab-btn" onclick="showTab('x')">⚙️ ตั้งค่า</button>
+</div>
+<div id="cView">
+  <div class="hdr"><h1>🥛 หัวนม100%</h1><p>สาขาประชาสงเคราะห์</p><div class="tbadge" id="tbadge">โต๊ะ —</div></div>
+  <div class="catnav" id="catnav"></div>
+  <div id="menuCont"></div>
+  <div class="sp"></div>
+</div>
+<div class="cartbar" id="cartbar">
+  <div style="font-size:14px">🛒 <span id="ccount">0</span> รายการ · <span style="color:#f5c842;font-weight:bold" id="ctotal">0</span> บาท</div>
+  <button class="cartbtn" onclick="openOrder()">ยืนยันออเดอร์</button>
+</div>
+<div class="overlay" id="optOv">
+  <div class="modal">
+    <h2 id="optTitle"></h2>
+    <div id="optGrps"></div>
+    <div class="qtysel"><button onclick="chQty(-1)">−</button><span id="iqty">1</span><button onclick="chQty(1)">+</button></div>
+    <button class="cfmbtn" onclick="cfmOpt()">✅ เพิ่มลงตะกร้า</button>
+    <button class="cancbtn" onclick="closeOpt()">ยกเลิก</button>
+  </div>
+</div>
+<div class="overlay" id="orderOv">
+  <div class="modal">
+    <h2>🧾 สรุปออเดอร์</h2>
+    <div id="oItems"></div>
+    <div class="ototal"><span>รวม</span><span id="oTotal">0 บาท</span></div>
+    <button class="cfmbtn" onclick="submitOrder()">✅ ยืนยันสั่งอาหาร</button>
+    <button class="cancbtn" onclick="closeOrder()">ยกเลิก</button>
+  </div>
+</div>
+<div class="success" id="successSc">
+  <div style="font-size:64px">✅</div>
+  <h2 style="margin:16px 0 8px">ส่งออเดอร์แล้ว!</h2>
+  <p id="successMsg">กรุณารอสักครู่</p>
+  <br>
+  <button onclick="resetOrder()" style="background:#2c1a0e;color:#f5c842;border:none;padding:12px 28px;border-radius:10px;font-size:15px;cursor:pointer">สั่งเพิ่ม</button>
+</div>
+<div class="sending" id="sendSc"><div class="spin"></div><div>กำลังส่งออเดอร์...</div></div>
+<div id="staffView">
+  <div class="shdr"><h2>👨‍🍳 หน้าจอพนักงาน</h2><p id="stStatus">กำลังโหลด...</p></div>
+  <div class="ocols">
+    <div class="col-new"><div class="coltitle">🆕 ใหม่</div><div id="oNew"></div></div>
+    <div class="col-do"><div class="coltitle">🔥 กำลังทำ</div><div id="oDo"></div></div>
+    <div class="col-done"><div class="coltitle">✅ เสร็จ</div><div id="oDone"></div></div>
+  </div>
+</div>
+<div id="setupView">
+  <div class="scard">
+    <h3 style="margin-bottom:12px">🔗 เชื่อมต่อ Google Sheets</h3>
+    <input class="sinput" id="sheetUrl" placeholder="https://script.google.com/macros/s/.../exec">
+    <button class="setupbtn" onclick="saveTest()">บันทึกและทดสอบ</button>
+    <div id="stMsg"></div>
+  </div>
+  <div class="scard" id="qrSec" style="display:none">
+    <h3 style="margin-bottom:12px">📱 QR Code โต๊ะ</h3>
+    <input class="sinput" id="appUrl" placeholder="https://...">
+    <button class="setupbtn" onclick="genQR()">สร้าง QR ทั้ง 6 โต๊ะ</button>
+    <div class="qrgrid" id="qrGrid"></div>
+    <button onclick="window.print()" style="margin-top:14px;background:#eee;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-size:14px">🖨️ พิมพ์ QR</button>
+  </div>
+</div>
+<script>
+var API = 'https://script.google.com/macros/s/AKfycbyQoXthSWAV_Zn54mJvFN7EeUj_C7CxDMKwv3nAZRG5uGpU6AtOjpLSwcFw4DNBH09gSw/exec';
+var table = '', cart = {}, curItem = null, selOpts = {}, iqty = 1, stInt = null, lastNew = 0, aCtx = null;
+
+var SW = [{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}];
+var SW2 = [{group:'ความหวาน',required:true,choices:['ปกติ 100%','น้อย 50%']}];
+
+var MENU = [
+  {id:'g1',name:'นมสดฮอกไกโด',emoji:'🥛',variants:[{label:'ร้อน',price:25},{label:'เย็น',price:35},{label:'ปั่น',price:45}],options:SW},
+  {id:'g2',name:'ไมโล',emoji:'🍫',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:SW},
+  {id:'g3',name:'โอวัลติน',emoji:'🥤',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:SW},
+  {id:'g4',name:'โคตรช็อค',emoji:'🍫',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:SW},
+  {id:'g5',name:'ไมโล ยุค 90',emoji:'🥛',variants:[{label:'เย็น',price:55},{label:'ปั่น',price:65}],options:SW},
+  {id:'g6',name:'นมสดสตรอเบอรี่',emoji:'🍓',variants:[{label:'เย็น',price:59},{label:'ปั่น',price:69}],options:SW},
+  {id:'g7',name:'ยูนิคอร์น',emoji:'🦄',variants:[{label:'เย็น',price:45},{label:'ปั่น+วิปครีม',price:69}],options:SW},
+  {id:'g8',name:'สตรอเบอรี่ชีสเค้ก ปั่น',emoji:'🍰',price:69,options:SW},
+  {id:'g9',name:'โกโก้บราวนี่ ปั่น',emoji:'🍫',price:69,options:SW},
+  {id:'g10',name:'บลูสกาย ปั่น',emoji:'💙',price:69,options:SW},
+  {id:'g11',name:'นมสดโอรีโอ้',emoji:'🥛',variants:[{label:'ปั่น',price:55},{label:'ปั่น+วิป',price:69}],options:SW},
+  {id:'g12',name:'มัทฉะนมสด',emoji:'🍵',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:SW},
+  {id:'g13',name:'กาแฟนมสด',emoji:'☕',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:SW},
+  {id:'g14',name:'ชาไทย',emoji:'🧋',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:SW},
+  {id:'g15',name:'ชาเขียว',emoji:'🍵',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:SW},
+  {id:'g16',name:'ชาเขียวมัทฉะ (นมโอ๊ต)',emoji:'🍵',price:49,options:SW},
+  {id:'g17',name:'ชาไทย (นมโอ๊ต)',emoji:'🧋',price:49,options:SW},
+  {id:'g18',name:'โกโก้ (นมโอ๊ต)',emoji:'🍫',price:49,options:SW},
+  {id:'g19',name:'กาแฟ (นมโอ๊ต)',emoji:'☕',price:49,options:SW},
+  {id:'g20',name:'มะม่วงสมูทตี้',emoji:'🥭',price:59,options:[{group:'โยเกิร์ต',required:true,choices:['ใส่โยเกิร์ต','ไม่ใส่']},SW[0]]},
+  {id:'g21',name:'กีวี่สมูทตี้',emoji:'🥝',price:59,options:[{group:'โยเกิร์ต',required:true,choices:['ใส่โยเกิร์ต','ไม่ใส่']},SW[0]]},
+  {id:'g22',name:'สตรอเบอรี่สมูทตี้',emoji:'🍓',price:59,options:[{group:'โยเกิร์ต',required:true,choices:['ใส่โยเกิร์ต','ไม่ใส่']},SW[0]]},
+  {id:'g23',name:'โซดา สตรอเบอรี่',emoji:'🍓',price:35,options:SW2},
+  {id:'g24',name:'โซดา กีวี่',emoji:'🥝',price:35,options:SW2},
+  {id:'g25',name:'โซดา ลิ้นจี่',emoji:'🍇',price:35,options:SW2},
+  {id:'g26',name:'โซดา บลูฮาวาย',emoji:'💙',price:35,options:SW2},
+  {id:'g27',name:'โซดา บลูเลมอน',emoji:'🍋',price:35,options:SW2},
+  {id:'g28',name:'โซดา มะม่วง',emoji:'🥭',price:35,options:SW2},
+  {id:'g29',name:'โซดา น้ำแดง',emoji:'🔴',price:35,options:SW2},
+  {id:'g30',name:'โซดา น้ำเขียว',emoji:'🟢',price:35,options:SW2},
+  {id:'g31',name:'โซดา น้ำผึ้งมะนาว',emoji:'🍯',price:35,options:SW2},
+  {id:'g32',name:'ชาเขียวมัทฉะ (มะพร้าวโฟม)',emoji:'🥥',price:59,options:SW},
+  {id:'g33',name:'โกโก้ (มะพร้าวโฟม)',emoji:'🥥',price:59,options:SW},
+  {id:'g34',name:'กาแฟ (มะพร้าวโฟม)',emoji:'🥥',price:59,options:SW},
+  {id:'g35',name:'สี่เสา ชาเขียว บราวนี่',emoji:'🍵',price:80,options:SW},
+  {id:'g36',name:'สี่เสา นมชมพู มาสเมโล่',emoji:'🌸',price:80,options:SW},
+  {id:'g37',name:'สี่เสา ชาไทย ฝอยทอง',emoji:'🧋',price:80,options:SW},
+  {id:'g38',name:'สี่เสา สตรอเบอรี่',emoji:'🍓',price:80,options:SW},
+  {id:'g39',name:'สี่เสา โกโก้ บราวนี่',emoji:'🍫',price:80,options:SW},
+  {id:'g40',name:'สี่เสา นมสด คอนเฟรค',emoji:'🥛',price:80,options:SW},
+  {id:'f1',name:'ชีสบอล 5 ลูก',emoji:'🧀',price:59},
+  {id:'f2',name:'นักเก็ตไก่ 5 ชิ้น',emoji:'🍗',price:59},
+  {id:'f3',name:'เฟรนฟรายหน้ายิ้ม',emoji:'🍟',price:59},
+  {id:'f4',name:'ไก่ป๊อป',emoji:'🍗',price:59,options:[{group:'ผง',required:true,choices:['ชีส','บาบีคิว','หม่าล่า','ซาวครีม','ปาปีก้า']}]},
+  {id:'f5',name:'เฟรนฟราย เขย่าผง',emoji:'🍟',price:59,options:[{group:'ผง',required:true,choices:['ชีส','บาบีคิว','หม่าล่า','ซาวครีม','ปาปีก้า']}]},
+  {id:'f6',name:'เฟรนฟราย ชีสดิป เขย่าผง',emoji:'🍟',price:79,options:[{group:'ผง',required:true,choices:['ชีส','บาบีคิว','หม่าล่า','ซาวครีม','ปาปีก้า']}]},
+  {id:'f7',name:'เฟรนฟราย ชีสพ่นไฟ เขย่าผง',emoji:'🔥',price:79,options:[{group:'ผง',required:true,choices:['ชีส','บาบีคิว','หม่าล่า','ซาวครีม','ปาปีก้า']}]},
+  {id:'cr1',name:'ครอฟเฟิล เปล่า',emoji:'🧇',price:35},
+  {id:'cr2',name:'ครอฟเฟิล วิปครีม',emoji:'🧇',price:55,options:[{group:'หน้า',required:true,choices:['มะม่วง','คอนเฟรค+คาราเมล','สตรอเบอรี่','กีวี่','กล้วยช็อค','บราวนี่']}]},
+  {id:'cr3',name:'ครอฟเฟิล ชุดเซต',emoji:'🧇',price:109,options:[{group:'รสชาติ',required:true,choices:['ช็อคโกแลต','สตรอเบอรี่','วนิลา']}]},
+  {id:'b1',name:'บิงซู เล็ก',emoji:'🍧',price:79,options:[{group:'รสชาติ',required:true,choices:['นมสด','สตรอเบอรี่','โกโก้','ชาเขียว','ชาไทย','มะม่วง','นมชมพู']}]},
+  {id:'b2',name:'บิงซู มือถือ',emoji:'🍧',price:119,options:[{group:'รสชาติ',required:true,choices:['นมสด โอรีโอ้','นมสด ไมโล โกโก้ครั้น','สตรอเบอรี่','โกโก้ บราวนี่','ชาเขียว บราวนี่','ชาไทย ฝอยทอง','มะม่วง','นมชมพู มาสเมโล่','ผลไม้รวม']}]},
+  {id:'b3',name:'บิงซู ใหญ่',emoji:'🍧',price:159,options:[{group:'รสชาติ',required:true,choices:['นมสด โอรีโอ้','สตรอเบอรี่','โกโก้ บราวนี่','ชาเขียว บราวนี่','ชาไทย ฝอยทอง','มะม่วง','นมชมพู มาสเมโล่']}]},
+  {id:'py1',name:'ปังเย็น',emoji:'🧊',price:59,options:[{group:'รสชาติ',required:true,choices:['ชาไทย','ชาเขียว','โกโก้','นมสด','นมชมพู','สตรอเบอรี่','มะม่วง','กีวี่']},SW[0]]},
+  {id:'kp1',name:'ขนมปังปิ้ง 2 แผ่น',emoji:'🍞',price:45,options:[{group:'แผ่นที่ 1',required:true,choices:['นมข้น','เนย-น้ำตาล','ซอสช็อค','คาราเมล','ซอสสตรอเบอรี่','นมข้น+ไมโล','นมข้น+โอวัลติน','พริกเผา+หมูหยอง']},{group:'แผ่นที่ 2',required:true,choices:['นมข้น','เนย-น้ำตาล','ซอสช็อค','คาราเมล','ซอสสตรอเบอรี่','นมข้น+ไมโล','นมข้น+โอวัลติน','พริกเผา+หมูหยอง']}]},
+  {id:'kp2',name:'ขนมปังปิ้ง 1 แผ่น',emoji:'🍞',price:25,options:[{group:'หน้า',required:true,choices:['นมข้น','เนย-น้ำตาล','ซอสช็อค','คาราเมล','ซอสสตรอเบอรี่']}]},
+  {id:'kp3',name:'ขนมปังปิ้ง สังขยาใบเตย 1 แผ่น',emoji:'🍞',price:30},
+  {id:'kp4',name:'ขนมปังปิ้ง สังขยาใบเตย 2 แผ่น',emoji:'🍞',price:50},
+  {id:'kp5',name:'ขนมปังปิ้ง สังขยาไข่เค็ม 1 แผ่น',emoji:'🍞',price:30},
+  {id:'kp6',name:'ขนมปังปิ้ง สังขยาไข่เค็ม 2 แผ่น',emoji:'🍞',price:50},
+  {id:'kp7',name:'ขนมปังปิ้ง กล้วยช็อค 1 แผ่น',emoji:'🍞',price:30},
+  {id:'kp8',name:'ขนมปังปิ้ง กล้วยช็อค 2 แผ่น',emoji:'🍞',price:50},
+  {id:'kp9',name:'ขนมปังปิ้ง วิปครีม',emoji:'🍞',price:50,options:[{group:'หน้า',required:true,choices:['วิปโกโก้ครั้น','วิปบราวนี่','วิปคอนเฟรค','วิปสตรอเบอรี่','วิปโอรีโอ้','วิปไมโล','วิปฝอยทอง']}]},
+  {id:'kp10',name:'ขนมปังปิ้ง สติ๊ก',emoji:'🍞',price:79,options:[{group:'หน้า',required:true,choices:['นมข้น','สังขยาใบเตย','สังขยาไข่เค็ม','ซอสสตรอเบอรี่']}]},
+  {id:'pz1',name:'ขนมปังพิซซ่า ไส้กรอกไก่ชีส',emoji:'🍕',price:49},
+  {id:'pz2',name:'ขนมปังพิซซ่า แฮมไก่ชีส',emoji:'🍕',price:49},
+  {id:'pz3',name:'ขนมปังพิซซ่า ผักขมชีส',emoji:'🍕',price:59},
+  {id:'pz4',name:'ขนมปังพิซซ่า ทะเลชีส',emoji:'🍕',price:69},
+  {id:'pz5',name:'ขนมปังพิซซ่า ข้าวโพดชีส',emoji:'🍕',price:49},
+  {id:'pz6',name:'พิซซ่าถาดเล็ก 4 ชิ้น',emoji:'🍕',price:79},
+  {id:'pz7',name:'พิซซ่าถาดใหญ่ 6 ชิ้น',emoji:'🍕',price:129},
+  {id:'pz8',name:'ผักขมอบชีส',emoji:'🫕',price:59},
+  {id:'pz9',name:'ข้าวโพดอบชีส',emoji:'🌽',price:49},
+  {id:'pz10',name:'ท็อปปิ้งพิซซ่า ชีส',emoji:'🧀',price:20},
+  {id:'pz11',name:'ท็อปปิ้งพิซซ่า ไส้กรอก',emoji:'🌭',price:10},
+  {id:'pz12',name:'ท็อปปิ้งพิซซ่า แฮม',emoji:'🥩',price:10},
+  {id:'wf1',name:'วาฟเฟิล 119฿',emoji:'🧇',price:119,options:[{group:'รสชาติ',required:true,choices:['บราวนี่+ไอศครีมช็อค','โอรีโอ้+ไอศครีมช็อค','ฝอยทอง+ไอศครีมวนิลา','คอนเฟรค+ไอศครีมวนิลา']}]},
+  {id:'wf2',name:'วาฟเฟิล 129฿',emoji:'🧇',price:129,options:[{group:'รสชาติ',required:true,choices:['สตรอเบอรี่+กล้วย']}]},
+  {id:'wf3',name:'วาฟเฟิล 139฿',emoji:'🧇',price:139,options:[{group:'รสชาติ',required:true,choices:['มะม่วง+ไอศครีมกะทิ']}]},
+  {id:'wp1',name:'วิปครีม',emoji:'🍦',price:45,options:[{group:'รสชาติ',required:true,choices:['สตรอเบอรี่','บราวนี่','กล้วย+ช็อค','กีวี่']}]},
+  {id:'t1',name:'มินิโทส 89฿',emoji:'🍞',price:89,options:[{group:'รสชาติ',required:true,choices:['สตรอเบอรี่+ไอศครีม','บราวนี่+ไอศครีมชาเขียว','บราวนี่+ไอศครีมช็อค','โกโก้ครั้น+ไอศครีมช็อค','กล้วย+ไอศครีมวนิลา']}]},
+  {id:'t2',name:'มินิโทส สังขยา 99฿',emoji:'🍞',price:99,options:[{group:'สังขยา',required:true,choices:['สังขยาใบเตย','สังขยาไข่เค็ม']}]},
+  {id:'t3',name:'โทสใหญ่ 149฿',emoji:'🍞',price:149,options:[{group:'รสชาติ',required:true,choices:['ฮั่นนี่โทส+ไอศครีมวนิลา','ช็อคบานาน่า+ไอศครีมช็อค','ช็อคสตรอเบอรี่+ไอศครีมสตรอเบอรี่']}]},
+  {id:'t4',name:'โทสใหญ่ สังขยา 159฿',emoji:'🍞',price:159,options:[{group:'สังขยา',required:true,choices:['สังขยาใบเตย+ไอศครีมกะทิ','สังขยาไข่เค็ม+ไอศครีมกะทิ']}]},
+  {id:'tp1',name:'ไอศครีม',emoji:'🍨',price:15,options:[{group:'รสชาติ',required:true,choices:['ช็อคโกแลต','วนิลา','สตรอเบอรี่','ชาเขียว','กะทิ']}]},
+  {id:'tp2',name:'มาสเมโล่',emoji:'☁️',price:15},
+  {id:'tp3',name:'บราวนี่',emoji:'🍫',price:15},
+  {id:'tp4',name:'วิปครีม (ท็อปปิ้ง)',emoji:'🍦',price:20},
+  {id:'tp5',name:'ฝอยทอง',emoji:'✨',price:15},
+  {id:'tp6',name:'คอนเฟรค',emoji:'🌾',price:15},
+  {id:'tp7',name:'โอรีโอ้',emoji:'⚫',price:15},
+  {id:'tp8',name:'เยลลี่',emoji:'🟡',price:15},
+  {id:'tp9',name:'สตรอเบอรี่สด',emoji:'🍓',price:15},
+  {id:'tp10',name:'กล้วย',emoji:'🍌',price:15},
+  {id:'tp11',name:'สังขยาใบเตย',emoji:'🌿',price:20},
+  {id:'tp12',name:'สังขยาไข่เค็ม',emoji:'🥚',price:20},
+  {id:'tp13',name:'นมข้น',emoji:'🥛',price:5},
+  {id:'tp14',name:'ซอสช็อคโกแลต',emoji:'🍫',price:5},
+  {id:'tp15',name:'ซอสสตรอเบอรี่',emoji:'🍓',price:5},
+  {id:'tp16',name:'ผงไมโล',emoji:'🟤',price:5},
+  {id:'tp17',name:'ผงโอวัลติน',emoji:'🟫',price:5}
+];
+
+var CATS = [
+  {k:'นมสด',e:'🥛',ids:['g1','g2','g3','g4','g5','g6','g7','g8','g9','g10','g11','g12','g13']},
+  {k:'น้ำชง',e:'🧋',ids:['g14','g15']},
+  {k:'นมโอ๊ต',e:'🌿',ids:['g16','g17','g18','g19']},
+  {k:'สมูทตี้',e:'🥤',ids:['g20','g21','g22']},
+  {k:'โซดา',e:'🫧',ids:['g23','g24','g25','g26','g27','g28','g29','g30','g31']},
+  {k:'มะพร้าวโฟม',e:'🥥',ids:['g32','g33','g34']},
+  {k:'สี่เสา',e:'🍧',ids:['g35','g36','g37','g38','g39','g40']},
+  {k:'ของทอด',e:'🍟',ids:['f1','f2','f3','f4','f5','f6','f7']},
+  {k:'ครอฟเฟิล',e:'🧇',ids:['cr1','cr2','cr3']},
+  {k:'บิงซู',e:'🍧',ids:['b1','b2','b3']},
+  {k:'ปังเย็น',e:'🧊',ids:['py1']},
+  {k:'ขนมปัง',e:'🍞',ids:['kp1','kp2','kp3','kp4','kp5','kp6','kp7','kp8','kp9','kp10']},
+  {k:'พิซซ่า',e:'🍕',ids:['pz1','pz2','pz3','pz4','pz5','pz6','pz7','pz8','pz9','pz10','pz11','pz12']},
+  {k:'วาฟเฟิล',e:'🧇',ids:['wf1','wf2','wf3']},
+  {k:'วิปครีม',e:'🍦',ids:['wp1']},
+  {k:'โทส',e:'🍞',ids:['t1','t2','t3','t4']},
+  {k:'ท็อปปิ้ง',e:'🍨',ids:['tp1','tp2','tp3','tp4','tp5','tp6','tp7','tp8','tp9','tp10','tp11','tp12','tp13','tp14','tp15','tp16','tp17']}
+];
+
+function getItem(id) { for(var i=0;i<MENU.length;i++) if(MENU[i].id===id) return MENU[i]; return null; }
+
+window.onload = function() {
+  var p = new URLSearchParams(window.location.search);
+  table = p.get('table')||'';
+  var isStaff = p.get('staff')==='1';
+  if(isStaff){ document.getElementById('tabBar').style.display='none'; showTab('s'); }
+  else if(table){ document.getElementById('tabBar').style.display='none'; showTab('c'); }
+  document.getElementById('tbadge').textContent = table ? 'โต๊ะ '+table : 'โต๊ะ —';
+  document.getElementById('sheetUrl').value = API;
+  document.getElementById('qrSec').style.display = 'block';
+  renderMenus();
+};
+
+function showTab(t) {
+  document.getElementById('cView').style.display = t==='c'?'block':'none';
+  document.getElementById('staffView').style.display = t==='s'?'block':'none';
+  document.getElementById('setupView').style.display = t==='x'?'block':'none';
+  var bs = document.querySelectorAll('.tab-btn');
+  var ts = ['c','s','x'];
+  for(var i=0;i<bs.length;i++) bs[i].classList.toggle('active', ts[i]===t);
+  if(t==='s') startPoll(); else stopPoll();
+}
+
+function renderMenus() {
+  var nav = document.getElementById('catnav'), mc = document.getElementById('menuCont');
+  var nh='', mh='';
+  for(var i=0;i<CATS.length;i++) {
+    var c = CATS[i];
+    nh += '<button class="catbtn'+(i===0?' active':'')+'" onclick="gocat(\''+c.k+'\')" id="nb_'+c.k+'">'+c.e+' '+c.k+'</button>';
+    mh += '<div class="sec-title" id="cat_'+c.k+'">'+c.e+' '+c.k+'</div><div class="mgrid">';
+    for(var j=0;j<c.ids.length;j++) {
+      var item = getItem(c.ids[j]);
+      if(!item) continue;
+      var pd = item.variants ? item.variants[0].price+'฿ขึ้นไป' : (item.price||0)+'฿';
+      mh += '<div class="mcard" onclick="openOpt(\''+item.id+'\')"><div class="memoji">'+item.emoji+'</div><div class="minfo"><div class="mname">'+item.name+'</div><div class="mprice">'+pd+'</div></div><div class="qbadge" id="qb_'+item.id+'">0</div><div class="marrow">›</div></div>';
+    }
+    mh += '</div>';
+  }
+  nav.innerHTML = nh; mc.innerHTML = mh;
+  window.onscroll = function() {
+    var cur=CATS[0].k;
+    for(var i=0;i<CATS.length;i++){ var el=document.getElementById('cat_'+CATS[i].k); if(el&&el.getBoundingClientRect().top<=100) cur=CATS[i].k; }
+    var bs=document.querySelectorAll('.catbtn'); for(var b=0;b<bs.length;b++) bs[b].classList.remove('active');
+    var ab=document.getElementById('nb_'+cur); if(ab){ ab.classList.add('active'); ab.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); }
+  };
+}
+
+function gocat(k) {
+  var el=document.getElementById('cat_'+k); if(el) window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-90,behavior:'smooth'});
+  var bs=document.querySelectorAll('.catbtn'); for(var b=0;b<bs.length;b++) bs[b].classList.remove('active');
+  var ab=document.getElementById('nb_'+k); if(ab) ab.classList.add('active');
+}
+
+function openOpt(id) {
+  var item=getItem(id); if(!item) return;
+  curItem=item; selOpts={}; iqty=1; document.getElementById('iqty').textContent='1';
+  document.getElementById('optTitle').textContent=item.name;
+  var h='';
+  if(item.variants) {
+    h+='<div class="optgrp"><div class="optgrp-title">เลือกแบบ <span style="color:#c0392b">*</span></div><div class="optchoices">';
+    for(var v=0;v<item.variants.length;v++) h+='<button class="optbtn" onclick="selOpt(\'แบบ\',\''+item.variants[v].label+' ('+item.variants[v].price+'฿)\',this)">'+item.variants[v].label+' — '+item.variants[v].price+'฿</button>';
+    h+='</div></div>';
+  }
+  if(item.options) for(var o=0;o<item.options.length;o++) {
+    var opt=item.options[o];
+    h+='<div class="optgrp"><div class="optgrp-title">'+opt.group+(opt.required?' <span style="color:#c0392b">*</span>':'')+'</div><div class="optchoices">';
+    for(var ch=0;ch<opt.choices.length;ch++) h+='<button class="optbtn" onclick="selOpt(\''+opt.group+'\',\''+opt.choices[ch]+'\',this)">'+opt.choices[ch]+'</button>';
+    h+='</div></div>';
+  }
+  document.getElementById('optGrps').innerHTML=h;
+  document.getElementById('optOv').classList.add('open');
+}
+
+function selOpt(g,c,btn) {
+  selOpts[g]=c;
+  var sibs=btn.closest('.optchoices').querySelectorAll('.optbtn');
+  for(var i=0;i<sibs.length;i++) sibs[i].classList.remove('sel');
+  btn.classList.add('sel');
+}
+
+function chQty(d) { iqty=Math.max(1,Math.min(10,iqty+d)); document.getElementById('iqty').textContent=iqty; }
+function closeOpt() { document.getElementById('optOv').classList.remove('open'); curItem=null; selOpts={}; }
+
+function cfmOpt() {
+  if(!curItem) return;
+  var req=[];
+  if(curItem.variants) req.push('แบบ');
+  if(curItem.options) for(var i=0;i<curItem.options.length;i++) if(curItem.options[i].required) req.push(curItem.options[i].group);
+  for(var r=0;r<req.length;r++) if(!selOpts[req[r]]) { alert('กรุณาเลือก: '+req[r]); return; }
+  var optStr=Object.values(selOpts).join(', ');
+  var key=curItem.id+'_'+optStr.replace(/[^\w\u0E00-\u0E7F]/g,'_');
+  var price=curItem.price||0;
+  if(curItem.variants&&selOpts['แบบ']) { var m=selOpts['แบบ'].match(/\((\d+)฿\)/); if(m) price=parseInt(m[1]); }
+  if(!cart[key]) cart[key]={qty:0,price:price,name:curItem.name,options:optStr};
+  cart[key].qty+=iqty;
+  var tot=0; for(var k in cart) if(k.indexOf(curItem.id+'_')===0) tot+=cart[k].qty;
+  var qb=document.getElementById('qb_'+curItem.id);
+  if(qb){ qb.textContent=tot; qb.style.display=tot>0?'flex':'none'; }
+  updCart(); closeOpt();
+}
+
+function updCart() {
+  var cnt=0,tot=0; for(var k in cart){ cnt+=cart[k].qty; tot+=cart[k].qty*cart[k].price; }
+  document.getElementById('ccount').textContent=cnt;
+  document.getElementById('ctotal').textContent=tot;
+  document.getElementById('cartbar').classList.toggle('visible',cnt>0);
+}
+
+function openOrder() {
+  if(!Object.keys(cart).length) return;
+  renderOrder(); document.getElementById('orderOv').classList.add('open');
+}
+
+function closeOrder() { document.getElementById('orderOv').classList.remove('open'); }
+
+function renderOrder() {
+  var keys=Object.keys(cart), h='', tot=0;
+  for(var i=0;i<keys.length;i++) {
+    var k=keys[i], item=cart[k], sub=item.qty*item.price;
+    h+='<div class="oitem">';
+    h+='<div class="oitem-info"><div class="oitem-name">'+item.name+'</div>';
+    if(item.options) h+='<div class="oitem-opt">'+item.options+'</div>';
+    h+='<div class="oitem-price">'+sub+' บาท</div></div>';
+    h+='<div class="oitem-ctrl">';
+    h+='<button class="oedit m" data-key="'+encodeURIComponent(k)+'" data-act="-1" onclick="doEdit(this)">−</button>';
+    h+='<span class="oqty">'+item.qty+'</span>';
+    h+='<button class="oedit p" data-key="'+encodeURIComponent(k)+'" data-act="1" onclick="doEdit(this)">+</button>';
+    h+='<button class="oedit d" data-key="'+encodeURIComponent(k)+'" data-act="0" onclick="doEdit(this)">✕</button>';
+    h+='</div></div>';
+    tot+=sub;
+  }
+  document.getElementById('oItems').innerHTML=h;
+  document.getElementById('oTotal').textContent=tot+' บาท';
+}
+
+function doEdit(btn) {
+  var k=decodeURIComponent(btn.getAttribute('data-key'));
+  var act=parseInt(btn.getAttribute('data-act'));
+  editItem(k, act);
+}
+
+function editItem(key,act) {
+  if(!cart[key]) return;
+  if(act===0) delete cart[key];
+  else { cart[key].qty+=act; if(cart[key].qty<=0) delete cart[key]; }
+  updAllBadges(); updCart();
+  if(!Object.keys(cart).length) closeOrder(); else renderOrder();
+}
+
+function updAllBadges() {
+  var bs=document.querySelectorAll('.qbadge'); for(var i=0;i<bs.length;i++){bs[i].textContent='0';bs[i].style.display='none';}
+  for(var k in cart) {
+    var id=k.split('_')[0], el=document.getElementById('qb_'+id);
+    if(el){ var cur=parseInt(el.textContent)||0; el.textContent=cur+cart[k].qty; el.style.display='flex'; }
+  }
+}
+
+async function submitOrder() {
+  if(!API){ alert('ยังไม่ได้ตั้งค่า URL'); return; }
+  closeOrder();
+  document.getElementById('sendSc').classList.add('show');
+  var items=[]; for(var k in cart) items.push({name:cart[k].name,qty:cart[k].qty,price:cart[k].price,options:cart[k].options||''});
+  var tot=0; for(var i=0;i<items.length;i++) tot+=items[i].qty*items[i].price;
+  try {
+    await fetch(API,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({table:table||'?',items:items,total:tot})});
+    document.getElementById('sendSc').classList.remove('show');
+    document.getElementById('successMsg').textContent='ออเดอร์โต๊ะ '+(table||'?')+' ส่งแล้ว! กรุณารอสักครู่';
+    document.getElementById('successSc').classList.add('show');
+  } catch(e){ document.getElementById('sendSc').classList.remove('show'); alert('เกิดข้อผิดพลาด กรุณาลองใหม่'); }
+}
+
+function resetOrder() {
+  cart={};
+  var bs=document.querySelectorAll('.qbadge'); for(var i=0;i<bs.length;i++){bs[i].textContent='0';bs[i].style.display='none';}
+  updCart(); document.getElementById('successSc').classList.remove('show');
+}
+
+function fmtTime(ts) {
+  try { if(typeof ts==='string'&&ts.indexOf('T')>-1){ var d=new Date(ts),t=new Date(d.getTime()+7*3600000); return ('0'+t.getUTCDate()).slice(-2)+'/'+('0'+(t.getUTCMonth()+1)).slice(-2)+'/'+t.getUTCFullYear()+' '+('0'+t.getUTCHours()).slice(-2)+':'+('0'+t.getUTCMinutes()).slice(-2); } return ts; } catch(e){ return ts; }
+}
+
+function startPoll(){ loadOrders(); stInt=setInterval(loadOrders,5000); }
+function stopPoll(){ clearInterval(stInt); }
+
+async function loadOrders() {
+  try {
+    var res=await fetch(API+'?action=getOrders'), orders=await res.json();
+    var byS={'ใหม่':[],'กำลังทำ':[],'เสร็จ':[]};
+    for(var i=0;i<orders.length;i++) if(byS[orders[i].status]!==undefined) byS[orders[i].status].push(orders[i]);
+    // เรียงเสร็จแล้วใหม่ล่าสุดอยู่บนสุด
+    byS['เสร็จ'].sort(function(a,b){ return Number(b.id) - Number(a.id); });
+    document.getElementById('oNew').innerHTML=renderCards(byS['ใหม่'],'กำลังทำ','🔥 รับออเดอร์','sbtn-do');
+    document.getElementById('oDo').innerHTML=renderCards(byS['กำลังทำ'],'เสร็จ','✅ เสร็จแล้ว','sbtn-done');
+    document.getElementById('oDone').innerHTML=byS['เสร็จ'].length?renderCards(byS['เสร็จ'],null,'',''):'<div class="empty">ว่าง</div>';
+    var nc=byS['ใหม่'].length; if(nc>lastNew) playAlert(); lastNew=nc;
+    document.getElementById('stStatus').textContent='อัปเดต '+new Date().toLocaleTimeString('th-TH');
+  } catch(e){ document.getElementById('stStatus').textContent='โหลดไม่ได้'; }
+}
+
+function renderCards(orders,nxt,lbl,cls) {
+  if(!orders.length) return '<div class="empty">ว่าง</div>';
+  var h='';
+  for(var i=0;i<orders.length;i++) {
+    var o=orders[i], it='';
+    if(o.items) for(var j=0;j<o.items.length;j++) it+=(j>0?'<br>':'')+'• '+o.items[j].name+(o.items[j].options?' ['+o.items[j].options+']':'')+' x'+o.items[j].qty;
+    h+='<div class="ocard"><div class="ocard-table">'+o.table+'</div><div class="ocard-time">'+fmtTime(o.timestamp)+'</div><div class="ocard-items">'+it+'</div><div class="ocard-price">฿'+o.total+'</div>';
+    if(nxt) h+='<button class="sbtn '+cls+'" onclick="updStatus(\''+o.id+'\',\''+nxt+'\')">'+lbl+'</button>';
+    h+='</div>';
+  }
+  return h;
+}
+
+async function updStatus(id,status) { await fetch(API+'?action=updateStatus&orderId='+id+'&status='+status); loadOrders(); }
+
+function playAlert() {
+  try {
+    if(!aCtx) aCtx=new(window.AudioContext||window.webkitAudioContext)();
+    var times = [0, 0.12, 0.24, 0.36, 0.48];
+    for(var t=0; t<times.length; t++) {
+      (function(delay) {
+        var o=aCtx.createOscillator(), g=aCtx.createGain();
+        o.connect(g); g.connect(aCtx.destination);
+        o.frequency.value = 880;
+        g.gain.setValueAtTime(0, aCtx.currentTime+delay);
+        g.gain.linearRampToValueAtTime(1.0, aCtx.currentTime+delay+0.02);
+        g.gain.linearRampToValueAtTime(0, aCtx.currentTime+delay+0.1);
+        o.start(aCtx.currentTime+delay);
+        o.stop(aCtx.currentTime+delay+0.11);
+      })(times[t]);
+    }
+  } catch(e){}
+}
+
+async function saveTest() {
+  var url=document.getElementById('sheetUrl').value.trim(); if(!url) return;
+  document.getElementById('stMsg').innerHTML='<div class="smsg">กำลังทดสอบ...</div>';
+  try { var r=await fetch(url+'?action=getOrders'); await r.json(); document.getElementById('stMsg').innerHTML='<div class="smsg ok">✅ เชื่อมต่อสำเร็จ!</div>'; document.getElementById('qrSec').style.display='block'; }
+  catch(e){ document.getElementById('stMsg').innerHTML='<div class="smsg err">❌ ไม่สามารถเชื่อมต่อได้</div>'; }
+}
+
+function genQR() {
+  var base=document.getElementById('appUrl').value.trim(); if(!base){alert('กรุณาใส่ URL ก่อน');return;}
+  var h=''; for(var i=1;i<=6;i++) h+='<div class="qritem"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+encodeURIComponent(base+'?table='+i)+'" /><div class="qrlabel">โต๊ะ '+i+'</div></div>';
+  document.getElementById('qrGrid').innerHTML=h;
+}
+</script>
+</body>
+</html>
