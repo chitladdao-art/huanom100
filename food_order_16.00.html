@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>หัวนม100% สาขาประชาสงเคราะห์</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Sarabun', sans-serif; background: #fdf6ee; color: #2c1a0e; }
+.tabs { display: flex; background: #2c1a0e; }
+.tab-btn { flex: 1; padding: 12px; color: #ccc; border: none; background: none; font-size: 14px; cursor: pointer; font-family: 'Sarabun', sans-serif; }
+.tab-btn.active { color: #f5c842; border-bottom: 3px solid #f5c842; }
+.customer-header { background: #2c1a0e; padding: 16px; text-align: center; }
+.customer-header h1 { color: #f5c842; font-size: 20px; }
+.customer-header p { color: #ccc; font-size: 12px; }
+.table-badge { display: inline-block; background: #f5c842; color: #2c1a0e; padding: 4px 14px; border-radius: 20px; font-size: 13px; margin-top: 6px; font-weight: bold; }
+.cat-nav { display: flex; overflow-x: auto; background: white; border-bottom: 2px solid #f0f0f0; padding: 0 8px; position: sticky; top: 0; z-index: 50; scrollbar-width: none; }
+.cat-nav::-webkit-scrollbar { display: none; }
+.cat-nav-btn { flex-shrink: 0; padding: 10px 12px; font-size: 13px; font-family: 'Sarabun', sans-serif; border: none; background: none; color: #888; cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; margin-bottom: -2px; }
+.cat-nav-btn.active { color: #2c1a0e; font-weight: bold; border-bottom-color: #f5c842; }
+.section-title { padding: 10px 16px; font-size: 15px; font-weight: bold; color: #2c1a0e; background: #f5c842; margin: 10px 0 4px; border-left: 5px solid #2c1a0e; }
+.menu-grid { display: flex; flex-direction: column; padding: 0 12px 4px; gap: 6px; }
+.menu-card { background: white; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: flex; align-items: center; padding: 10px 12px; gap: 10px; cursor: pointer; }
+.menu-emoji { font-size: 22px; min-width: 30px; text-align: center; }
+.menu-info { flex: 1; }
+.menu-name { font-size: 14px; font-weight: bold; }
+.menu-price { color: #c0392b; font-size: 13px; margin-top: 2px; }
+.menu-arrow { color: #ccc; font-size: 18px; }
+.qty-badge { background: #f5c842; color: #2c1a0e; border-radius: 50%; width: 22px; height: 22px; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+.cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #2c1a0e; color: white; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 100; transform: translateY(100%); transition: transform 0.3s; }
+.cart-bar.visible { transform: translateY(0); }
+.cart-btn { background: #f5c842; color: #2c1a0e; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 15px; font-family: 'Sarabun', sans-serif; }
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; }
+.modal-overlay.open { display: flex; align-items: flex-end; }
+.modal { background: white; border-radius: 20px 20px 0 0; padding: 20px; width: 100%; max-height: 80vh; overflow-y: auto; }
+.modal h2 { font-size: 17px; margin-bottom: 14px; }
+.option-group { margin-bottom: 14px; }
+.option-group-title { font-size: 13px; font-weight: bold; color: #555; margin-bottom: 8px; }
+.option-choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.option-btn { padding: 8px 14px; border-radius: 20px; border: 2px solid #ddd; background: white; font-size: 13px; cursor: pointer; font-family: 'Sarabun', sans-serif; }
+.option-btn.selected { border-color: #2c1a0e; background: #2c1a0e; color: #f5c842; }
+.order-total { display: flex; justify-content: space-between; padding: 12px 0; font-weight: bold; font-size: 16px; }
+.confirm-btn { width: 100%; background: #2c1a0e; color: #f5c842; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; font-family: 'Sarabun', sans-serif; }
+.cancel-btn { width: 100%; background: #eee; color: #555; border: none; padding: 12px; border-radius: 10px; font-size: 14px; cursor: pointer; margin-top: 8px; font-family: 'Sarabun', sans-serif; }
+.success-screen { display: none; position: fixed; inset: 0; background: #fdf6ee; z-index: 300; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; }
+.success-screen.show { display: flex; }
+.success-icon { font-size: 64px; margin-bottom: 16px; }
+#staffView { display: none; padding: 16px; }
+.staff-header { background: #2c1a0e; color: #f5c842; padding: 16px; border-radius: 10px; text-align: center; margin-bottom: 16px; }
+.orders-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.col-title { font-size: 12px; font-weight: bold; text-align: center; padding: 6px; border-radius: 6px; margin-bottom: 8px; }
+.col-new .col-title { background: #ffeaa7; color: #856404; }
+.col-doing .col-title { background: #ffd3b6; color: #c0392b; }
+.col-done .col-title { background: #d4edda; color: #155724; }
+.order-card { background: white; border-radius: 8px; padding: 10px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); font-size: 12px; }
+.order-card .order-table { font-weight: bold; font-size: 13px; margin-bottom: 2px; }
+.order-card .order-time { color: #888; margin-bottom: 4px; }
+.order-card .order-items { color: #444; margin-bottom: 6px; line-height: 1.5; }
+.order-card .order-price { font-weight: bold; color: #c0392b; margin-bottom: 6px; }
+.status-btn { width: 100%; padding: 6px; border: none; border-radius: 6px; font-size: 11px; cursor: pointer; font-family: 'Sarabun', sans-serif; font-weight: bold; }
+.btn-doing { background: #ffd3b6; color: #c0392b; }
+.btn-done { background: #d4edda; color: #155724; }
+.no-orders { text-align: center; color: #ccc; font-size: 12px; padding: 20px 0; }
+#setupView { display: none; padding: 20px; }
+.setup-card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+.setup-input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: 'Sarabun', sans-serif; margin-bottom: 10px; }
+.setup-btn { background: #2c1a0e; color: #f5c842; border: none; padding: 10px 20px; border-radius: 8px; font-size: 14px; cursor: pointer; font-family: 'Sarabun', sans-serif; font-weight: bold; }
+.status-msg { margin-top: 10px; font-size: 13px; padding: 8px; border-radius: 6px; }
+.status-ok { background: #d4edda; color: #155724; }
+.status-err { background: #f8d7da; color: #721c24; }
+.qr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.qr-item { text-align: center; background: #fdf6ee; border-radius: 8px; padding: 12px; }
+.qr-item img { width: 100%; max-width: 120px; }
+.qr-label { font-size: 13px; font-weight: bold; margin-top: 6px; }
+.bottom-space { height: 80px; }
+.qty-selector { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 14px 0; background: #f9f9f9; border-radius: 12px; padding: 10px; }
+.qty-selector button { width: 36px; height: 36px; border-radius: 50%; border: none; font-size: 20px; cursor: pointer; background: #f5c842; color: #2c1a0e; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+.qty-selector span { font-size: 20px; font-weight: bold; min-width: 30px; text-align: center; }
+.order-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; gap: 8px; }
+.order-item-info { flex: 1; font-size: 13px; }
+.order-item-name { font-weight: bold; margin-bottom: 2px; }
+.order-item-opt { color: #888; font-size: 12px; }
+.order-item-price { color: #c0392b; font-size: 13px; font-weight: bold; white-space: nowrap; }
+.order-item-controls { display: flex; align-items: center; gap: 6px; }
+.order-edit-btn { width: 28px; height: 28px; border-radius: 50%; border: none; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+.order-edit-btn.minus { background: #eee; color: #555; }
+.order-edit-btn.plus { background: #f5c842; color: #2c1a0e; }
+.order-edit-btn.del { background: #fee; color: #c0392b; font-size: 12px; }
+.order-qty { font-size: 14px; font-weight: bold; min-width: 20px; text-align: center; }
+.sending-screen { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 400; flex-direction: column; align-items: center; justify-content: center; color: white; font-size: 18px; gap: 16px; }
+.sending-screen.show { display: flex; }
+.spinner { width: 48px; height: 48px; border: 5px solid rgba(255,255,255,0.3); border-top-color: #f5c842; border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div class="tabs" id="tabBar">
+  <button class="tab-btn active" onclick="showTab('customer')">🍽️ เมนู</button>
+  <button class="tab-btn" onclick="showTab('staff')">👨‍🍳 พนักงาน</button>
+  <button class="tab-btn" onclick="showTab('setup')">⚙️ ตั้งค่า</button>
+</div>
+
+<div id="customerView">
+  <div class="customer-header">
+    <h1>🥛 หัวนม100%</h1>
+    <p>สาขาประชาสงเคราะห์</p>
+    <div class="table-badge" id="tableBadge">โต๊ะ —</div>
+  </div>
+  <div class="cat-nav" id="catNav"></div>
+  <div id="menuContainer"></div>
+  <div class="bottom-space"></div>
+</div>
+
+<div class="cart-bar" id="cartBar">
+  <div style="font-size:14px;">🛒 <span id="cartCount">0</span> รายการ · <span style="color:#f5c842;font-weight:bold;" id="cartTotal">0</span> บาท</div>
+  <button class="cart-btn" onclick="openOrderModal()">ยืนยันออเดอร์</button>
+</div>
+
+<div class="modal-overlay" id="optionOverlay">
+  <div class="modal">
+    <h2 id="optionTitle"></h2>
+    <div id="optionGroups"></div>
+    <div class="qty-selector">
+      <button onclick="changeItemQty(-1)">−</button>
+      <span id="itemQty">1</span>
+      <button onclick="changeItemQty(1)">+</button>
+    </div>
+    <button class="confirm-btn" onclick="confirmOption()">✅ เพิ่มลงตะกร้า</button>
+    <button class="cancel-btn" onclick="closeOption()">ยกเลิก</button>
+  </div>
+</div>
+
+<div class="sending-screen" id="sendingScreen">
+  <div class="spinner"></div>
+  <div>กำลังส่งออเดอร์...</div>
+</div>
+
+<div class="modal-overlay" id="orderOverlay">
+  <div class="modal">
+    <h2>🧾 สรุปออเดอร์</h2>
+    <div id="modalItems"></div>
+    <div class="order-total"><span>รวม</span><span id="modalTotal">0 บาท</span></div>
+    <button class="confirm-btn" onclick="submitOrder()">✅ ยืนยันสั่งอาหาร</button>
+    <button class="cancel-btn" onclick="document.getElementById('orderOverlay').classList.remove('open')">ยกเลิก</button>
+  </div>
+</div>
+
+<div class="success-screen" id="successScreen">
+  <div class="success-icon">✅</div>
+  <h2>ส่งออเดอร์แล้ว!</h2>
+  <p id="successMsg">กรุณารอสักครู่</p>
+  <br>
+  <button onclick="resetOrder()" style="background:#2c1a0e;color:#f5c842;border:none;padding:12px 28px;border-radius:10px;font-size:15px;cursor:pointer;font-family:Sarabun,sans-serif;">สั่งเพิ่ม</button>
+</div>
+
+<div id="staffView">
+  <div class="staff-header">
+    <h2>👨‍🍳 หน้าจอพนักงาน</h2>
+    <p id="staffStatus">กำลังโหลด...</p>
+  </div>
+  <div class="orders-cols">
+    <div class="col-new"><div class="col-title">🆕 ใหม่</div><div id="newOrders"></div></div>
+    <div class="col-doing"><div class="col-title">🔥 กำลังทำ</div><div id="doingOrders"></div></div>
+    <div class="col-done"><div class="col-title">✅ เสร็จ</div><div id="doneOrders"></div></div>
+  </div>
+</div>
+
+<div id="setupView">
+  <div class="setup-card">
+    <h3 style="margin-bottom:12px;">🔗 เชื่อมต่อ Google Sheets</h3>
+    <input class="setup-input" id="sheetUrl" placeholder="https://script.google.com/macros/s/.../exec" />
+    <button class="setup-btn" onclick="saveAndTest()">บันทึกและทดสอบ</button>
+    <div id="statusMsg"></div>
+  </div>
+  <div class="setup-card" id="qrSection" style="display:none">
+    <h3 style="margin-bottom:12px;">📱 QR Code โต๊ะ</h3>
+    <input class="setup-input" id="appUrl" placeholder="https://..." />
+    <button class="setup-btn" onclick="generateQRs()">สร้าง QR ทั้ง 6 โต๊ะ</button>
+    <div class="qr-grid" id="qrGrid"></div>
+    <button onclick="window.print()" style="margin-top:14px;background:#eee;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-size:14px;font-family:Sarabun,sans-serif;">🖨️ พิมพ์ QR</button>
+  </div>
+</div>
+
+<script>
+var scriptUrl = 'https://script.google.com/macros/s/AKfycbyQoXthSWAV_Zn54mJvFN7EeUj_C7CxDMKwv3nAZRG5uGpU6AtOjpLSwcFw4DNBH09gSw/exec';
+var tableNum = '';
+var cart = {};
+var currentItem = null;
+var selectedOptions = {};
+var itemQty = 1;
+var staffInterval = null;
+var lastNewCount = 0;
+var audioCtx = null;
+
+var MENU = [
+  {id:'g1',name:'นมสดฮอกไกโด',emoji:'🥛',variants:[{label:'ร้อน',price:25},{label:'เย็น',price:35},{label:'ปั่น',price:45}],options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g2',name:'ไมโล',emoji:'🍫',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g3',name:'โอวัลติน',emoji:'🥤',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g4',name:'โคตรช็อค',emoji:'🍫',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g5',name:'ไมโล ยุค 90',emoji:'🥛',variants:[{label:'เย็น',price:55},{label:'ปั่น',price:65}],options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g6',name:'นมสดสตรอเบอรี่',emoji:'🍓',variants:[{label:'เย็น',price:59},{label:'ปั่น',price:69}],options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g7',name:'ยูนิคอร์น',emoji:'🦄',variants:[{label:'เย็น',price:45},{label:'ปั่น (วิปครีม)',price:69}],options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g8',name:'สตรอเบอรี่ชีสเค้ก ปั่น',emoji:'🍰',price:69,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g9',name:'โกโก้บราวนี่ ปั่น',emoji:'🍫',price:69,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g10',name:'บลูสกาย ปั่น',emoji:'💙',price:69,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g10b',name:'นมสดโอรีโอ้',emoji:'🥛',variants:[{label:'ปั่น',price:55},{label:'ปั่น+วิป',price:69}],options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g10c',name:'มัทฉะนมสด',emoji:'🍵',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g10d',name:'กาแฟนมสด',emoji:'☕',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g11',name:'ชาไทย',emoji:'🧋',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g12',name:'ชาเขียว',emoji:'🍵',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g13',name:'ชาเขียวมัทฉะ (นมโอ๊ต)',emoji:'🍵',price:49,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g14',name:'ชาไทย (นมโอ๊ต)',emoji:'🧋',price:49,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g15',name:'โกโก้ (นมโอ๊ต)',emoji:'🍫',price:49,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g16',name:'กาแฟ (นมโอ๊ต)',emoji:'☕',price:49,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g17',name:'มะม่วงสมูทตี้',emoji:'🥭',price:59,options:[{group:'โยเกิร์ต',required:true,choices:['ใส่โยเกิร์ต','ไม่ใส่โยเกิร์ต']},{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g18',name:'กีวี่สมูทตี้',emoji:'🥝',price:59,options:[{group:'โยเกิร์ต',required:true,choices:['ใส่โยเกิร์ต','ไม่ใส่โยเกิร์ต']},{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g19',name:'สตรอเบอรี่สมูทตี้',emoji:'🍓',price:59,options:[{group:'โยเกิร์ต',required:true,choices:['ใส่โยเกิร์ต','ไม่ใส่โยเกิร์ต']},{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g20',name:'โซดา สตรอเบอรี่',emoji:'🍓',price:35,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','น้อย 50%']}]},
+  {id:'g21',name:'โซดา กีวี่',emoji:'🥝',price:35,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','น้อย 50%']}]},
+  {id:'g22',name:'โซดา ลิ้นจี่',emoji:'🍇',price:35,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','น้อย 50%']}]},
+  {id:'g23',name:'โซดา บลูฮาวาย',emoji:'💙',price:35,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','น้อย 50%']}]},
+  {id:'g24',name:'โซดา บลูเลมอน',emoji:'🍋',price:35,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','น้อย 50%']}]},
+  {id:'g25',name:'โซดา มะม่วง',emoji:'🥭',price:35,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','น้อย 50%']}]},
+  {id:'g26',name:'โซดา น้ำแดง',emoji:'🔴',price:35,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','น้อย 50%']}]},
+  {id:'g27',name:'โซดา น้ำเขียว',emoji:'🟢',price:35,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','น้อย 50%']}]},
+  {id:'g28',name:'โซดา น้ำผึ้งมะนาว',emoji:'🍯',price:35,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','น้อย 50%']}]},
+  {id:'g29',name:'ชาเขียวมัทฉะ (น้ำมะพร้าว)',emoji:'🥥',price:59,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g30',name:'โกโก้ (น้ำมะพร้าว)',emoji:'🥥',price:59,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g31',name:'กาแฟ (น้ำมะพร้าว)',emoji:'🥥',price:59,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g32',name:'สี่เสา ชาเขียว บราวนี่',emoji:'🍵',price:80,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g33',name:'สี่เสา นมชมพู มาสเมโล่',emoji:'🌸',price:80,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g34',name:'สี่เสา ชาไทย ฝอยทอง',emoji:'🧋',price:80,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g35',name:'สี่เสา สตรอเบอรี่',emoji:'🍓',price:80,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g36',name:'สี่เสา โกโก้ บราวนี่',emoji:'🍫',price:80,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'g37',name:'สี่เสา นมสด คอนเฟรค',emoji:'🥛',price:80,options:[{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'f1',name:'ชีสบอล 5 ลูก',emoji:'🧀',price:59},
+  {id:'f2',name:'นักเก็ตไก่ 5 ชิ้น',emoji:'🍗',price:59},
+  {id:'f3',name:'เฟรนฟรายหน้ายิ้ม',emoji:'🍟',price:59},
+  {id:'f4',name:'ไก่ป๊อป',emoji:'🍗',price:59,options:[{group:'ผง',required:true,choices:['ผงชีส','ผงบาบีคิว','ผงหม่าล่า','ผงซาวครีม','ผงปาปีก้า']}]},
+  {id:'f5',name:'เฟรนฟราย เขย่าผง',emoji:'🍟',price:59,options:[{group:'ผง',required:true,choices:['ผงชีส','ผงบาบีคิว','ผงหม่าล่า','ผงซาวครีม','ผงปาปีก้า']}]},
+  {id:'f6',name:'เฟรนฟราย ชีสดิป เขย่าผง',emoji:'🍟',price:79,options:[{group:'ผง',required:true,choices:['ผงชีส','ผงบาบีคิว','ผงหม่าล่า','ผงซาวครีม','ผงปาปีก้า']}]},
+  {id:'f7',name:'เฟรนฟราย ชีสพ่นไฟ เขย่าผง',emoji:'🔥',price:79,options:[{group:'ผง',required:true,choices:['ผงชีส','ผงบาบีคิว','ผงหม่าล่า','ผงซาวครีม','ผงปาปีก้า']}]},
+  {id:'cr1',name:'ครอฟเฟิล เปล่า',emoji:'🧇',price:35},
+  {id:'cr2',name:'ครอฟเฟิล วิปครีม',emoji:'🧇',price:55,options:[{group:'หน้า',required:true,choices:['มะม่วง','คอนเฟรค+คาราเมล','สตรอเบอรี่','กีวี่','กล้วยช็อคโกแลต','บราวนี่']}]},
+  {id:'cr3',name:'ครอฟเฟิล ชุดเซต',emoji:'🧇',price:109,options:[{group:'รสชาติ',required:true,choices:['ช็อคโกแลต','สตรอเบอรี่','วนิลา']}]},
+  {id:'b1',name:'บิงซู เล็ก',emoji:'🍧',price:79,options:[{group:'รสชาติ',required:true,choices:['นมสด','สตรอเบอรี่','โกโก้','ชาเขียว','ชาไทย','มะม่วง','นมชมพู']}]},
+  {id:'b2',name:'บิงซู มือถือ',emoji:'🍧',price:119,options:[{group:'รสชาติ',required:true,choices:['นมสด โอรีโอ้','นมสด ไมโล โกโก้ครั้น','สตรอเบอรี่','โกโก้ บราวนี่','ชาเขียว บราวนี่','ชาไทย ฝอยทอง','มะม่วง','นมชมพู มาสเมโล่','ผลไม้รวม']}]},
+  {id:'b3',name:'บิงซู ใหญ่',emoji:'🍧',price:159,options:[{group:'รสชาติ',required:true,choices:['นมสด โอรีโอ้','สตรอเบอรี่','โกโก้ บราวนี่','ชาเขียว บราวนี่','ชาไทย ฝอยทอง','มะม่วง','นมชมพู มาสเมโล่']}]},
+  {id:'kp1',name:'ขนมปังปิ้ง 2 แผ่น (1 คู่)',emoji:'🍞',price:45,options:[{group:'แผ่นที่ 1',required:true,choices:['นมข้น','เนย-น้ำตาล','ซอสช็อค','คาราเมล','ซอสสตรอเบอรี่','นมข้น+ไมโล','นมข้น+โอวัลติน','พริกเผา+หมูหยอง']},{group:'แผ่นที่ 2',required:true,choices:['นมข้น','เนย-น้ำตาล','ซอสช็อค','คาราเมล','ซอสสตรอเบอรี่','นมข้น+ไมโล','นมข้น+โอวัลติน','พริกเผา+หมูหยอง']}]},
+  {id:'kp1b',name:'ขนมปังปิ้ง 1 แผ่น',emoji:'🍞',price:25,options:[{group:'หน้า',required:true,choices:['นมข้น','เนย-น้ำตาล','ซอสช็อค','คาราเมล','ซอสสตรอเบอรี่','นมข้น+ไมโล','นมข้น+โอวัลติน','พริกเผา+หมูหยอง']}]},
+  {id:'kp2',name:'ขนมปังปิ้ง สังขยาใบเตย 1 แผ่น',emoji:'🍞',price:30},
+  {id:'kp2b',name:'ขนมปังปิ้ง สังขยาใบเตย 2 แผ่น',emoji:'🍞',price:50},
+  {id:'kp2c',name:'ขนมปังปิ้ง สังขยาไข่เค็ม 1 แผ่น',emoji:'🍞',price:30},
+  {id:'kp2d',name:'ขนมปังปิ้ง สังขยาไข่เค็ม 2 แผ่น',emoji:'🍞',price:50},
+  {id:'kp2e',name:'ขนมปังปิ้ง กล้วยช็อค 1 แผ่น',emoji:'🍞',price:30},
+  {id:'kp2f',name:'ขนมปังปิ้ง กล้วยช็อค 2 แผ่น',emoji:'🍞',price:50},
+  {id:'kp3',name:'ขนมปังปิ้ง วิปครีม',emoji:'🍞',price:50,options:[{group:'หน้า',required:true,choices:['วิปโกโก้ครั้น','วิปบราวนี่','วิปคอนเฟรค','วิปสตรอเบอรี่','วิปโอรีโอ้','วิปไมโล','วิปฝอยทอง']}]},
+  {id:'kp4',name:'ขนมปังปิ้ง สติ๊ก',emoji:'🍞',price:79,options:[{group:'หน้า',required:true,choices:['นมข้น','สังขยาใบเตย','สังขยาไข่เค็ม','ซอสสตรอเบอรี่']}]},
+  {id:'pz1',name:'ขนมปังพิซซ่า ไส้กรอกไก่ชีส',emoji:'🍕',price:49},
+  {id:'pz2',name:'ขนมปังพิซซ่า แฮมไก่ชีส',emoji:'🍕',price:49},
+  {id:'pz3',name:'ขนมปังพิซซ่า ผักขมชีส',emoji:'🍕',price:59},
+  {id:'pz4',name:'ขนมปังพิซซ่า ทะเลชีส',emoji:'🍕',price:69},
+  {id:'pz5',name:'ขนมปังพิซซ่า ข้าวโพดชีส',emoji:'🍕',price:49},
+  {id:'pz6',name:'พิซซ่าถาดเล็ก 4 ชิ้น',emoji:'🍕',price:79},
+  {id:'pz7',name:'พิซซ่าถาดใหญ่ 6 ชิ้น',emoji:'🍕',price:129},
+  {id:'pz8',name:'ผักขมอบชีส 1 ถ้วย',emoji:'🫕',price:59},
+  {id:'pz9',name:'ข้าวโพดอบชีส 1 ถ้วย',emoji:'🌽',price:49},
+  {id:'pz10',name:'ท็อปปิ้งพิซซ่า ชีส',emoji:'🧀',price:20},
+  {id:'pz11',name:'ท็อปปิ้งพิซซ่า ไส้กรอก',emoji:'🌭',price:10},
+  {id:'pz12',name:'ท็อปปิ้งพิซซ่า แฮม',emoji:'🥩',price:10},
+  {id:'wf1',name:'วาฟเฟิล 119฿',emoji:'🧇',price:119,options:[{group:'รสชาติ',required:true,choices:['บราวนี่+ไอศครีมช็อคโกแลต','โอรีโอ้+ไอศครีมช็อคโกแลต','ฝอยทอง+ไอศครีมวนิลา','คอนเฟรค+ไอศครีมวนิลา']}]},
+  {id:'wf2',name:'วาฟเฟิล 129฿',emoji:'🧇',price:129,options:[{group:'รสชาติ',required:true,choices:['สตรอเบอรี่+กล้วย+ไอศครีมสตรอเบอรี่']}]},
+  {id:'wf3',name:'วาฟเฟิล 139฿',emoji:'🧇',price:139,options:[{group:'รสชาติ',required:true,choices:['มะม่วง+ไอศครีมกะทิ']}]},
+  
+  {id:'wp1',name:'วิปครีม',emoji:'🍦',price:45,options:[{group:'รสชาติ',required:true,choices:['สตรอเบอรี่','บราวนี่','กล้วย+ช็อค','กีวี่']}]},
+  {id:'t1',name:'มินิโทส 89฿',emoji:'🍞',price:89,options:[{group:'รสชาติ',required:true,choices:['สตรอเบอรี่+ไอศครีม','บราวนี่+ไอศครีมชาเขียว','บราวนี่+ไอศครีมช็อค','โกโก้ครั้น+ไอศครีมช็อค','กล้วย+ไอศครีมวนิลา']}]},
+  {id:'t1b',name:'มินิโทส สังขยา 99฿',emoji:'🍞',price:99,options:[{group:'สังขยา',required:true,choices:['สังขยาใบเตย','สังขยาไข่เค็ม']}]},
+  {id:'t2',name:'โทสใหญ่ 149฿',emoji:'🍞',price:149,options:[{group:'รสชาติ',required:true,choices:['ฮั่นนี่โทส+ไอศครีมวนิลา 2ลูก','ช็อคบานาน่า+ไอศครีมช็อค','ช็อคสตรอเบอรี่+ไอศครีมสตรอเบอรี่']}]},
+  {id:'t2b',name:'โทสใหญ่ สังขยา 159฿',emoji:'🍞',price:159,options:[{group:'สังขยา',required:true,choices:['สังขยาใบเตย+ไอศครีมกะทิ','สังขยาไข่เค็ม+ไอศครีมกะทิ']}]},
+  {id:'py1',name:'ปังเย็น',emoji:'🧊',price:59,options:[{group:'รสชาติ',required:true,choices:['ชาไทย','ชาเขียว','โกโก้','นมสด','นมชมพู','สตรอเบอรี่','มะม่วง','กีวี่']},{group:'ความหวาน',required:true,choices:['ปกติ 100%','กลาง 50%','น้อย 25%']}]},
+  {id:'tp1',name:'ไอศครีม',emoji:'🍨',price:15,options:[{group:'รสชาติ',required:true,choices:['ช็อคโกแลต','วนิลา','สตรอเบอรี่','ชาเขียว','กะทิ']}]},
+  {id:'tp2',name:'มาสเมโล่',emoji:'☁️',price:15},
+  {id:'tp3',name:'บราวนี่',emoji:'🍫',price:15},
+  {id:'tp4',name:'วิปครีม (ท็อปปิ้ง)',emoji:'🍦',price:20},
+  {id:'tp5',name:'ฝอยทอง',emoji:'✨',price:15},
+  {id:'tp6',name:'คอนเฟรค',emoji:'🌾',price:15},
+  {id:'tp7',name:'โอรีโอ้',emoji:'⚫',price:15},
+  {id:'tp8',name:'เยลลี่',emoji:'🟡',price:15},
+  {id:'tp9',name:'สตรอเบอรี่สด',emoji:'🍓',price:15},
+  {id:'tp10',name:'กล้วย',emoji:'🍌',price:15},
+  {id:'tp11',name:'สังขยาใบเตย',emoji:'🌿',price:20},
+  {id:'tp12',name:'สังขยาไข่เค็ม',emoji:'🥚',price:20},
+  {id:'tp13',name:'นมข้น',emoji:'🥛',price:5},
+  {id:'tp14',name:'ซอสช็อคโกแลต',emoji:'🍫',price:5},
+  {id:'tp15',name:'ซอสสตรอเบอรี่',emoji:'🍓',price:5},
+  {id:'tp16',name:'ผงไมโล',emoji:'🟤',price:5},
+  {id:'tp17',name:'ผงโอวัลติน',emoji:'🟫',price:5}
+];
+
+var CATEGORIES = [
+  {key:'นมสด',emoji:'🥛',items:['g1','g2','g3','g4','g5','g6','g7','g8','g9','g10','g10b','g10c','g10d']},
+  {key:'น้ำชง',emoji:'🧋',items:['g11','g12']},
+  {key:'นมโอ๊ต',emoji:'🌿',items:['g13','g14','g15','g16']},
+  {key:'สมูทตี้',emoji:'🥤',items:['g17','g18','g19']},
+  {key:'โซดา',emoji:'🫧',items:['g20','g21','g22','g23','g24','g25','g26','g27','g28']},
+  {key:'มะพร้าวโฟม',emoji:'🥥',items:['g29','g30','g31']},
+  {key:'สี่เสา',emoji:'🍧',items:['g32','g33','g34','g35','g36','g37']},
+  {key:'ของทอด',emoji:'🍟',items:['f1','f2','f3','f4','f5','f6','f7']},
+  {key:'ครอฟเฟิล',emoji:'🧇',items:['cr1','cr2','cr3']},
+  {key:'บิงซู',emoji:'🍧',items:['b1','b2','b3']},
+  {key:'ขนมปัง',emoji:'🍞',items:['kp1','kp1b','kp2','kp2b','kp2c','kp2d','kp2e','kp2f','kp3','kp4']},
+  {key:'ปังเย็น',emoji:'🧊',items:['py1']},
+  {key:'พิซซ่า',emoji:'🍕',items:['pz1','pz2','pz3','pz4','pz5','pz6','pz7','pz8','pz9','pz10','pz11','pz12']},
+  {key:'วาฟเฟิล',emoji:'🧇',items:['wf1','wf2','wf3']},
+  {key:'วิปครีม',emoji:'🍦',items:['wp1']},
+  {key:'โทส',emoji:'🍞',items:['t1','t1b','t2','t2b']},
+  {key:'ท็อปปิ้ง',emoji:'🍨',items:['tp1','tp2','tp3','tp4','tp5','tp6','tp7','tp8','tp9','tp10','tp11','tp12','tp13','tp14','tp15','tp16','tp17']}
+];
+
+window.onload = function() {
+  var params = new URLSearchParams(window.location.search);
+  tableNum = params.get('table') || '';
+  var isStaff = params.get('staff') === '1';
+  if (isStaff) { document.getElementById('tabBar').style.display='none'; showTab('staff'); }
+  else if (tableNum) { document.getElementById('tabBar').style.display='none'; showTab('customer'); }
+  document.getElementById('tableBadge').textContent = tableNum ? 'โต๊ะ ' + tableNum : 'โต๊ะ —';
+  document.getElementById('sheetUrl').value = scriptUrl;
+  if (scriptUrl) document.getElementById('qrSection').style.display = 'block';
+  renderAllMenus();
+};
+
+function showTab(tab) {
+  document.getElementById('customerView').style.display = tab==='customer' ? 'block' : 'none';
+  document.getElementById('staffView').style.display = tab==='staff' ? 'block' : 'none';
+  document.getElementById('setupView').style.display = tab==='setup' ? 'block' : 'none';
+  var btns = document.querySelectorAll('.tab-btn');
+  var tabs = ['customer','staff','setup'];
+  for (var i=0; i<btns.length; i++) btns[i].classList.toggle('active', tabs[i]===tab);
+  if (tab==='staff') startStaffPolling(); else stopStaffPolling();
+}
+
+function renderAllMenus() {
+  var nav = document.getElementById('catNav');
+  var navHtml = '';
+  for (var i=0; i<CATEGORIES.length; i++) {
+    navHtml += '<button class="cat-nav-btn' + (i===0?' active':'') + '" onclick="scrollToCategory(\'' + CATEGORIES[i].key + '\')" id="navbtn_' + CATEGORIES[i].key + '">' + CATEGORIES[i].emoji + ' ' + CATEGORIES[i].key + '</button>';
+  }
+  nav.innerHTML = navHtml;
+
+  var container = document.getElementById('menuContainer');
+  var html = '';
+  for (var c=0; c<CATEGORIES.length; c++) {
+    var cat = CATEGORIES[c];
+    html += '<div class="section-title" id="cat_' + cat.key + '">' + cat.emoji + ' ' + cat.key + '</div>';
+    html += '<div class="menu-grid">';
+    for (var j=0; j<cat.items.length; j++) {
+      var item = null;
+      for (var k=0; k<MENU.length; k++) { if (MENU[k].id===cat.items[j]) { item=MENU[k]; break; } }
+      if (!item) continue;
+      var priceDisplay = item.variants ? item.variants[0].price + '฿ขึ้นไป' : (item.price||0) + '฿';
+      html += '<div class="menu-card" onclick="openOption(\'' + item.id + '\')">';
+      html += '<div class="menu-emoji">' + item.emoji + '</div>';
+      html += '<div class="menu-info"><div class="menu-name">' + item.name + '</div><div class="menu-price">' + priceDisplay + '</div></div>';
+      html += '<span class="qty-badge" id="qty_' + item.id + '" style="display:none">0</span>';
+      html += '<div class="menu-arrow">›</div></div>';
+    }
+    html += '</div>';
+  }
+  container.innerHTML = html;
+
+  window.addEventListener('scroll', function() {
+    var current = CATEGORIES[0].key;
+    for (var i=0; i<CATEGORIES.length; i++) {
+      var el = document.getElementById('cat_' + CATEGORIES[i].key);
+      if (el && el.getBoundingClientRect().top <= 100) current = CATEGORIES[i].key;
+    }
+    var allBtns = document.querySelectorAll('.cat-nav-btn');
+    for (var b=0; b<allBtns.length; b++) allBtns[b].classList.remove('active');
+    var activeBtn = document.getElementById('navbtn_' + current);
+    if (activeBtn) { activeBtn.classList.add('active'); activeBtn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); }
+  });
+}
+
+function scrollToCategory(key) {
+  var el = document.getElementById('cat_' + key);
+  if (el) { var offset = el.getBoundingClientRect().top + window.scrollY - 90; window.scrollTo({top:offset,behavior:'smooth'}); }
+  var allBtns = document.querySelectorAll('.cat-nav-btn');
+  for (var b=0; b<allBtns.length; b++) allBtns[b].classList.remove('active');
+  var btn = document.getElementById('navbtn_' + key);
+  if (btn) btn.classList.add('active');
+}
+
+function openOption(itemId) {
+  var item = null;
+  for (var i=0; i<MENU.length; i++) { if (MENU[i].id===itemId) { item=MENU[i]; break; } }
+  if (!item) return;
+  currentItem = item;
+  selectedOptions = {};
+  document.getElementById('optionTitle').textContent = item.name;
+  var html = '';
+  if (item.variants) {
+    html += '<div class="option-group"><div class="option-group-title">เลือกแบบ <span style="color:#c0392b">*</span></div><div class="option-choices">';
+    for (var v=0; v<item.variants.length; v++) {
+      html += '<button class="option-btn" onclick="selectOpt(\'แบบ\',\'' + item.variants[v].label + ' (' + item.variants[v].price + 'บาท)\',this)">' + item.variants[v].label + ' — ' + item.variants[v].price + '฿</button>';
+    }
+    html += '</div></div>';
+  }
+  if (item.options) {
+    for (var o=0; o<item.options.length; o++) {
+      var opt = item.options[o];
+      html += '<div class="option-group"><div class="option-group-title">' + opt.group + (opt.required?' <span style="color:#c0392b">*</span>':'') + '</div><div class="option-choices">';
+      for (var ch=0; ch<opt.choices.length; ch++) {
+        html += '<button class="option-btn" onclick="selectOpt(\'' + opt.group + '\',\'' + opt.choices[ch] + '\',this)">' + opt.choices[ch] + '</button>';
+      }
+      html += '</div></div>';
+    }
+  }
+  itemQty = 1;
+  document.getElementById('itemQty').textContent = '1';
+  document.getElementById('optionGroups').innerHTML = html;
+  document.getElementById('optionOverlay').classList.add('open');
+}
+
+function selectOpt(group, choice, btn) {
+  selectedOptions[group] = choice;
+  var siblings = btn.closest('.option-choices').querySelectorAll('.option-btn');
+  for (var i=0; i<siblings.length; i++) siblings[i].classList.remove('selected');
+  btn.classList.add('selected');
+}
+
+function closeOption() {
+  document.getElementById('optionOverlay').classList.remove('open');
+  currentItem = null; selectedOptions = {};
+}
+
+function changeItemQty(delta) {
+  itemQty = Math.max(1, Math.min(10, itemQty + delta));
+  document.getElementById('itemQty').textContent = itemQty;
+}
+
+function confirmOption() {
+  if (!currentItem) return;
+  var required = [];
+  if (currentItem.variants) required.push('แบบ');
+  if (currentItem.options) for (var i=0; i<currentItem.options.length; i++) if (currentItem.options[i].required) required.push(currentItem.options[i].group);
+  for (var r=0; r<required.length; r++) {
+    if (!selectedOptions[required[r]]) { alert('กรุณาเลือก: ' + required[r]); return; }
+  }
+  var optStr = Object.values(selectedOptions).join(', ');
+  var cartKey = currentItem.id + '_' + optStr.replace(/[^\w\u0E00-\u0E7F]/g, '_');
+  var price = currentItem.price || 0;
+  if (currentItem.variants && selectedOptions['แบบ']) {
+    var match = selectedOptions['แบบ'].match(/\((\d+)บาท\)/);
+    if (match) price = parseInt(match[1]);
+  }
+  if (!cart[cartKey]) cart[cartKey] = {qty:0, price:price, name:currentItem.name, options:optStr};
+  cart[cartKey].qty += itemQty;
+  var total = 0;
+  for (var k in cart) { if (k.startsWith(currentItem.id + '_')) total += cart[k].qty; }
+  var qtyEl = document.getElementById('qty_' + currentItem.id);
+  if (qtyEl) { qtyEl.textContent = total; qtyEl.style.display = total > 0 ? 'flex' : 'none'; }
+  updateCartBar();
+  closeOption();
+}
+
+function updateCartBar() {
+  var count = 0, total = 0;
+  for (var k in cart) { count += cart[k].qty; total += cart[k].qty * cart[k].price; }
+  document.getElementById('cartCount').textContent = count;
+  document.getElementById('cartTotal').textContent = total;
+  document.getElementById('cartBar').classList.toggle('visible', count > 0);
+}
+
+function openOrderModal() {
+  if (!Object.keys(cart).length) return;
+  renderOrderModal();
+  document.getElementById('orderOverlay').classList.add('open');
+}
+
+function renderOrderModal() {
+  var keys = Object.keys(cart);
+  var html = '';
+  var total = 0;
+  for (var i=0; i<keys.length; i++) {
+    var k = keys[i];
+    var item = cart[k];
+    var safeKey = JSON.stringify(k);
+    html += '<div class="order-item">';
+    html += '<div class="order-item-info">';
+    html += '<div class="order-item-name">' + item.name + '</div>';
+    if (item.options) html += '<div class="order-item-opt">' + item.options + '</div>';
+    html += '<div class="order-item-price">' + (item.qty * item.price) + '฿</div>';
+    html += '</div>';
+    html += '<div class="order-item-controls">';
+    html += '<button class="order-edit-btn minus" onclick="editCartItem(' + safeKey + ',-1)">−</button>';
+    html += '<span class="order-qty">' + item.qty + '</span>';
+    html += '<button class="order-edit-btn plus" onclick="editCartItem(' + safeKey + ',1)">+</button>';
+    html += '<button class="order-edit-btn del" onclick="editCartItem(' + safeKey + ',0)">🗑</button>';
+    html += '</div></div>';
+    total += item.qty * item.price;
+  }
+  document.getElementById('modalItems').innerHTML = html;
+  document.getElementById('modalTotal').textContent = total + ' บาท';
+}
+
