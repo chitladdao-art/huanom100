@@ -868,7 +868,7 @@ function buildOrderCard(o) {
   }
 
   div.innerHTML = '<div class="oc-table">' + o.table + '</div>'
-    + '<div class="oc-time">' + o.timestamp + '</div>'
+    + '<div class="oc-time">' + formatThaiTime(o.timestamp) + '</div>'
     + itemsHtml
     + '<div class="oc-total">฿' + o.total + '</div>'
     + btnHtml
@@ -1014,7 +1014,23 @@ function doPrint(content) {
     }, 300);
   }
 }
+
+
+function formatThaiTime(ts){
+  if(!ts) return "";
+  if(/^\d{2}\/\d{2}\/\d{4}/.test(String(ts))) return String(ts);
+  try{
+    var d=new Date(ts);
+    if(isNaN(d.getTime())) return String(ts);
+    var thai=new Date(d.getTime()+7*60*60*1000);
+    var dd=String(thai.getUTCDate()).padStart(2,"0");
+    var mm=String(thai.getUTCMonth()+1).padStart(2,"0");
+    var yyyy=thai.getUTCFullYear();
+    var hh=String(thai.getUTCHours()).padStart(2,"0");
+    var min=String(thai.getUTCMinutes()).padStart(2,"0");
+    return dd+"/"+mm+"/"+yyyy+" "+hh+":"+min;
+  }catch(e){return String(ts);}
+}
 </script>
 </body>
 </html>
-HTMLEOF
