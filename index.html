@@ -227,6 +227,89 @@ var FLAVOR_IMAGES = {
   },
 };
 
+var SVG_IMAGES = {
+  "m1": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZmZjNlMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6WbPC90ZXh0Pjwvc3ZnPg==",
+  "m3": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzFhMWEyZSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42rPC90ZXh0Pjwvc3ZnPg==",
+  "m4": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzNlMWYwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42rPC90ZXh0Pjwvc3ZnPg==",
+  "m5": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzFhM2ExYSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6WbPC90ZXh0Pjwvc3ZnPg==",
+  "m6": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZmMTc0NCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42TPC90ZXh0Pjwvc3ZnPg==",
+  "m8": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzFhMWExYSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42qPC90ZXh0Pjwvc3ZnPg==",
+  "m9": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzJlN2QzMiIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn421PC90ZXh0Pjwvc3ZnPg==",
+  "m10": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzRlMzQyZSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7imJU8L3RleHQ+PC9zdmc+",
+  "s1": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzFiNWUyMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn421PC90ZXh0Pjwvc3ZnPg==",
+  "s2": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U5MWU2MyIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6m3PC90ZXh0Pjwvc3ZnPg==",
+  "s3": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U2NTEwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6ehPC90ZXh0Pjwvc3ZnPg==",
+  "s4": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U1MzkzNSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42TPC90ZXh0Pjwvc3ZnPg==",
+  "s5": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzNlMjcyMyIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42rPC90ZXh0Pjwvc3ZnPg==",
+  "s6": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2UzZjJmZCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6WbPC90ZXh0Pjwvc3ZnPg==",
+  "b1": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U2NTEwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn421PC90ZXh0Pjwvc3ZnPg==",
+  "b2": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzFiNWUyMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn421PC90ZXh0Pjwvc3ZnPg==",
+  "b3": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzIxMjEyMSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5akPC90ZXh0Pjwvc3ZnPg==",
+  "c1": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzFiNWUyMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6WlPC90ZXh0Pjwvc3ZnPg==",
+  "c2": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzNlMjcyMyIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6WlPC90ZXh0Pjwvc3ZnPg==",
+  "c3": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzRlMzQyZSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6WlPC90ZXh0Pjwvc3ZnPg==",
+  "c4": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzRhMTQ4YyIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6unPC90ZXh0Pjwvc3ZnPg==",
+  "c5": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2UwZjdmYSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6WlPC90ZXh0Pjwvc3ZnPg==",
+  "o5": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzJlN2QzMiIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn421PC90ZXh0Pjwvc3ZnPg==",
+  "o1": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U2NTEwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn4y+PC90ZXh0Pjwvc3ZnPg==",
+  "o2": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzFiNWUyMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn4y+PC90ZXh0Pjwvc3ZnPg==",
+  "o3": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzNlMjcyMyIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn4y+PC90ZXh0Pjwvc3ZnPg==",
+  "o4": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzRlMzQyZSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn4y+PC90ZXh0Pjwvc3ZnPg==",
+  "sm2": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZmNmYwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6WtPC90ZXh0Pjwvc3ZnPg==",
+  "sm3": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzMzNjkxZSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6WdPC90ZXh0Pjwvc3ZnPg==",
+  "sd3": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZmNmYwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6eDPC90ZXh0Pjwvc3ZnPg==",
+  "sd5": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzU1OGIyZiIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6eDPC90ZXh0Pjwvc3ZnPg==",
+  "sd8": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2FkMTQ1NyIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6eDPC90ZXh0Pjwvc3ZnPg==",
+  "sd10": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzAyODhkMSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6unPC90ZXh0Pjwvc3ZnPg==",
+  "sd11": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2M2MjgyOCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6unPC90ZXh0Pjwvc3ZnPg==",
+  "sd12": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzJlN2QzMiIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6unPC90ZXh0Pjwvc3ZnPg==",
+  "py1": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzAyODhkMSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6eKPC90ZXh0Pjwvc3ZnPg==",
+  "bs1": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y4YmJkMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42nPC90ZXh0Pjwvc3ZnPg==",
+  "br1": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZmOGYwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42ePC90ZXh0Pjwvc3ZnPg==",
+  "br2": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzMzNjkxZSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42ePC90ZXh0Pjwvc3ZnPg==",
+  "br3": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y1N2YxNyIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42ePC90ZXh0Pjwvc3ZnPg==",
+  "br4": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzRlMzQyZSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42ePC90ZXh0Pjwvc3ZnPg==",
+  "cr1": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZmOGYwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6eHPC90ZXh0Pjwvc3ZnPg==",
+  "cr2": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U2NTEwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6eHPC90ZXh0Pjwvc3ZnPg==",
+  "w1": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZmOGYwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6eHPC90ZXh0Pjwvc3ZnPg==",
+  "w2": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U1MzkzNSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6eHPC90ZXh0Pjwvc3ZnPg==",
+  "w3": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZmNmYwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6eHPC90ZXh0Pjwvc3ZnPg==",
+  "t1": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZmOGYwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42ePC90ZXh0Pjwvc3ZnPg==",
+  "t3": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y5YTgyNSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42vPC90ZXh0Pjwvc3ZnPg==",
+  "t4": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzMzNjkxZSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42ePC90ZXh0Pjwvc3ZnPg==",
+  "pz1": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U1MzkzNSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42VPC90ZXh0Pjwvc3ZnPg==",
+  "pz2": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2M2MjgyOCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42VPC90ZXh0Pjwvc3ZnPg==",
+  "pz3": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y5YTgyNSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42VPC90ZXh0Pjwvc3ZnPg==",
+  "pz4": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzJlN2QzMiIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42VPC90ZXh0Pjwvc3ZnPg==",
+  "pz5": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzE1NjVjMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42VPC90ZXh0Pjwvc3ZnPg==",
+  "pz6": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U1MzkzNSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42VPC90ZXh0Pjwvc3ZnPg==",
+  "pz7": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2I3MWMxYyIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42VPC90ZXh0Pjwvc3ZnPg==",
+  "f1": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y5YTgyNSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6eAPC90ZXh0Pjwvc3ZnPg==",
+  "f2": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZmOGYwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42XPC90ZXh0Pjwvc3ZnPg==",
+  "f3": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZmOGYwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42fPC90ZXh0Pjwvc3ZnPg==",
+  "f5": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U2NTEwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42fPC90ZXh0Pjwvc3ZnPg==",
+  "f6": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZmOGYwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5iKPC90ZXh0Pjwvc3ZnPg==",
+  "f4": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U2NTEwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42XPC90ZXh0Pjwvc3ZnPg==",
+  "wh5": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzMzNjkxZSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6WdPC90ZXh0Pjwvc3ZnPg==",
+  "wh6": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzRlMzQyZSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42MPC90ZXh0Pjwvc3ZnPg==",
+  "wh7": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZmNmYwMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6WtPC90ZXh0Pjwvc3ZnPg==",
+  "tp10": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y4YmJkMCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42mPC90ZXh0Pjwvc3ZnPg==",
+  "tp_ice": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2UzZjJmZCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42oPC90ZXh0Pjwvc3ZnPg==",
+  "tp4": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzNlMjcyMyIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42rPC90ZXh0Pjwvc3ZnPg==",
+  "tp5": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzIxMjEyMSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42qPC90ZXh0Pjwvc3ZnPg==",
+  "tp6": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y5YTgyNSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7inKg8L3RleHQ+PC9zdmc+",
+  "tp7": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2UzZjJmZCIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6WjPC90ZXh0Pjwvc3ZnPg==",
+  "tp8": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZjZTRlYyIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7imIHvuI88L3RleHQ+PC9zdmc+",
+  "tp9": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U4ZjVlOSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5+iPC90ZXh0Pjwvc3ZnPg==",
+  "tp11": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzMzNjkxZSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42DPC90ZXh0Pjwvc3ZnPg==",
+  "tp12": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y1N2YxNyIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6WaPC90ZXh0Pjwvc3ZnPg==",
+  "tp13": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2ZmZjhlMSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn6WbPC90ZXh0Pjwvc3ZnPg==",
+  "tp14": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzNlMjcyMyIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42rPC90ZXh0Pjwvc3ZnPg==",
+  "tp15": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U1MzkzNSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn42TPC90ZXh0Pjwvc3ZnPg==",
+  "tp16": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzFhM2ExYSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5+iPC90ZXh0Pjwvc3ZnPg==",
+  "tp17": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzRlMzQyZSIgcng9IjEyIi8+PHRleHQgeD0iNTAiIHk9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjUyIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj7wn5+kPC90ZXh0Pjwvc3ZnPg=="
+};
+
 
 
 var SWEETNESS = ['หวานปกติ 100%','หวาน 50%','หวาน 25%'];
@@ -239,7 +322,7 @@ var CATEGORIES = [
     {id:'m4',name:'โคตรช็อค',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],sweet:true},
     {id:'m5',name:'ไมโล ยุค 90',variants:[{label:'เย็น',price:55},{label:'ปั่น',price:65}],sweet:true},
     {id:'m6',name:'นมสดสตรอเบอรี่',variants:[{label:'เย็น',price:59},{label:'ปั่น',price:69}],sweet:true},
-    {id:'m7',name:'ยูนิคอร์น',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:69}],sweet:true},
+    {id:'m7',name:'ยูนิคอร์น',variants:[{label:'เย็น',price:45},{label:'ปั่น+วิปครีม',price:69}],sweet:true},
     {id:'m8',name:'นมสดโอรีโอ้',variants:[{label:'ปั่น',price:55},{label:'ปั่น+วิป',price:69}],sweet:true},
     {id:'m9',name:'มัทฉะนมสด',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],sweet:true},
     {id:'m10',name:'กาแฟนมสด',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],sweet:true},
@@ -256,42 +339,44 @@ var CATEGORIES = [
   {id:'brew',name:'น้ำชง',emoji:'🧋',items:[
     {id:'b1',name:'ชาไทย',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],sweet:true},
     {id:'b2',name:'ชาเขียว',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],sweet:true},
-    {id:'b3',name:'ชาดำเย็น',price:40,sweet:true},
-    {id:'b4',name:'มัทฉะลาเต้',price:55,sweet:true}
+    {id:'b3',name:'ชาดำเย็น',price:40,sweet:true}
   ]},
   {id:'coconut',name:'มะพร้าวโฟม',emoji:'🥥',items:[
     {id:'c1',name:'มะพร้าวโฟม ชาเขียวมัทฉะ',price:59},
     {id:'c2',name:'มะพร้าวโฟม โกโก้',price:59},
-    {id:'c3',name:'มะพร้าวโฟม กาแฟ',price:59}
+    {id:'c3',name:'มะพร้าวโฟม กาแฟ',price:59},
+    {id:'c4',name:'มะพร้าวโฟมอัญชัญ',price:59},
+    {id:'c5',name:'มะพร้าวโฟม',price:59}
   ]},
   {id:'oat',name:'นมโอ๊ต',emoji:'🥛',items:[
+    {id:'o5',name:'นมโอ๊ตมัทฉะ',price:59,sweet:true},
     {id:'o1',name:'นมโอ๊ต ชาไทย',price:59,sweet:true},
     {id:'o2',name:'นมโอ๊ต ชาเขียว',price:59,sweet:true},
     {id:'o3',name:'นมโอ๊ต โกโก้',price:59,sweet:true},
     {id:'o4',name:'นมโอ๊ต กาแฟ',price:59,sweet:true}
   ]},
   {id:'smoothie',name:'สมูทตี้โยเกิร์ต',emoji:'🥤',items:[
-    {id:'sm1',name:'สมูทตี้โยเกิร์ต สตรอเบอรี่',price:59},
-    {id:'sm2',name:'สมูทตี้โยเกิร์ต มะม่วง',price:59},
-    {id:'sm3',name:'สมูทตี้โยเกิร์ต บลูเบอรี่',price:59}
+    {id:'sm1',name:'สมูทตี้โยเกิร์ต สตรอเบอรี่',price:59,flavors:['ใส่โยเกิร์ต','ไม่ใส่โยเกิร์ต'],flavorLabel:'โยเกิร์ต'},
+    {id:'sm2',name:'สมูทตี้โยเกิร์ต มะม่วง',price:59,flavors:['ใส่โยเกิร์ต','ไม่ใส่โยเกิร์ต'],flavorLabel:'โยเกิร์ต'},
+    {id:'sm3',name:'สมูทตี้โยเกิร์ต กีวี่',price:59,flavors:['ใส่โยเกิร์ต','ไม่ใส่โยเกิร์ต'],flavorLabel:'โยเกิร์ต'}
   ]},
   {id:'soda',name:'โซดา',emoji:'🫧',items:[
-    {id:'sd1',name:'โซดาบลูฮาวาย',price:35},
-    {id:'sd2',name:'โซดาสตรอเบอรี่',price:35},
-    {id:'sd3',name:'โซดามะม่วง',price:35},
-    {id:'sd5',name:'โซดากีวี่',price:35},
-    {id:'sd8',name:'โซดาลิ้นจี่',price:35},
-    {id:'sd10',name:'โซดาบลูเลม่อน',price:35},
-    {id:'sd11',name:'โซดาน้ำแดง',price:35},
-    {id:'sd12',name:'โซดาน้ำเขียว',price:35}
+    {id:'sd1',name:'โซดาบลูฮาวาย',price:35,sweet:true},
+    {id:'sd2',name:'โซดาสตรอเบอรี่',price:35,sweet:true},
+    {id:'sd3',name:'โซดามะม่วง',price:35,sweet:true},
+    {id:'sd5',name:'โซดากีวี่',price:35,sweet:true},
+    {id:'sd8',name:'โซดาลิ้นจี่',price:35,sweet:true},
+    {id:'sd10',name:'โซดาบลูเลม่อน',price:35,sweet:true},
+    {id:'sd11',name:'โซดาน้ำแดง',price:35,sweet:true},
+    {id:'sd12',name:'โซดาน้ำเขียว',price:35,sweet:true}
   ]},
   {id:'pangyen',name:'ปังเย็น',emoji:'🧊',items:[
     {id:'py1',name:'ปังเย็น',price:59,sweet:true,flavors:['ชาไทย','ชาเขียว','โกโก้','นมสด','นมชมพู','สตรอเบอรี่','มะม่วง','กีวี่'],flavorLabel:'รสชาติ'}
   ]},
   {id:'bingsu',name:'บิงซู',emoji:'🍧',items:[
     {id:'bs1',name:'บิงซู เล็ก',price:79,flavors:['นมสด','ชาเขียว','ชาไทย','สตรอเบอรี่','มะม่วง','โกโก้ บราวนี่','โอรีโอ้'],flavorLabel:'รสชาติ'},
-    {id:'bs2',name:'บิงซู มือถือ',price:119,flavors:['นมสด','ชาเขียว','ชาไทย','สตรอเบอรี่','มะม่วง','โกโก้ บราวนี่','โอรีโอ้','ผลไม้รวม'],flavorLabel:'รสชาติ'},
-    {id:'bs3',name:'บิงซู ใหญ่',price:159,flavors:['นมสด','ชาเขียว','ชาไทย','สตรอเบอรี่','มะม่วง','โกโก้ บราวนี่','โอรีโอ้'],flavorLabel:'รสชาติ'}
+    {id:'bs2',name:'บิงซู มือถือ',price:119,flavors:['นมสด+บราวนี่','ชาเขียว+บราวนี่','ชาไทย+ฝอยทอง','นมสด+โอรีโอ้','สตรอเบอรี่','มะม่วง','โกโก้ บราวนี่','ผลไม้รวม'],flavorLabel:'รสชาติ'},
+    {id:'bs3',name:'บิงซู ใหญ่',price:159,flavors:['นมสด+บราวนี่','ชาเขียว+บราวนี่','ชาไทย+ฝอยทอง','นมสด+โอรีโอ้','สตรอเบอรี่','มะม่วง','โกโก้ บราวนี่'],flavorLabel:'รสชาติ'}
   ]},
   {id:'bread',name:'ขนมปัง',emoji:'🍞',items:[
     {id:'br1',name:'ขนมปังปิ้ง',variants:[{label:'1 แผ่น',price:25},{label:'2 แผ่น',price:45}],flavors:['สังขยา','ช็อคโกแลต','นม','สตรอเบอรี่','เนย'],flavorLabel:'หน้า'},
@@ -301,23 +386,28 @@ var CATEGORIES = [
   ]},
   {id:'croffle',name:'ครอฟเฟิล',emoji:'🧇',items:[
     {id:'cr1',name:'ครอฟเฟิลเปล่า',price:59},
-    {id:'cr2',name:'ครอฟเฟิล+วิปครีม',price:79},
-    {id:'cr3',name:'ครอฟเฟิลเซต',price:119,flavors:['สังขยา','ช็อคโกแลต','สตรอเบอรี่','นม'],flavorLabel:'หน้า'}
+    {id:'cr2',name:'ครอฟเฟิล+วิปครีม',price:79,flavors:['คอนเฟรค','บราวนี่','สตรอเบอรี่','มะม่วง','โกโก้ครั้น'],flavorLabel:'รสชาติ'},
+    {id:'cr3',name:'ครอฟเฟิลเซต',price:119,flavors:['ซอสช็อค+ไอศครีมช็อค','ซอสสตอ+ไอศครีมสตอ','น้ำผึ้ง+ไอศครีมวนิลา'],flavorLabel:'รสชาติ'}
   ]},
   {id:'waffle',name:'วาฟเฟิล',emoji:'🧇',items:[
     {id:'w1',name:'วาฟเฟิล 119฿',price:119,flavors:['บราวนี่+ไอศครีมช็อค','โอรีโอ้+ไอศครีมช็อค','ฝอยทอง+ไอศครีมวนิลา','คอนเฟรค+ไอศครีมวนิลา'],flavorLabel:'รสชาติ'},
-    {id:'w2',name:'วาฟเฟิล 129฿',price:129,flavors:['สตรอเบอรี่+กล้วย'],flavorLabel:'รสชาติ'},
-    {id:'w3',name:'วาฟเฟิล 139฿',price:139,flavors:['มะม่วง+ไอศครีมกะทิ'],flavorLabel:'รสชาติ'}
+    {id:'w2',name:'วาฟเฟิลสตอ+กล้วย 129฿',price:129,flavors:['สตรอเบอรี่+กล้วย'],flavorLabel:'รสชาติ'},
+    {id:'w3',name:'วาฟเฟิลมะม่วง 139฿',price:139,flavors:['มะม่วง+ไอศครีมกะทิ'],flavorLabel:'รสชาติ'}
   ]},
   {id:'toast',name:'โทส',emoji:'🍞',items:[
     {id:'t1',name:'มินิโทส 89฿',price:89,flavors:['สตรอเบอรี่+ไอศครีม','บราวนี่+ไอศครีมชาเขียว','บราวนี่+ไอศครีมช็อค','โกโก้ครั้น+ไอศครีมช็อค','กล้วย+ไอศครีมวนิลา'],flavorLabel:'รสชาติ'},
     {id:'t2',name:'มินิโทส สังขยา 99฿',price:99,flavors:['สังขยาใบเตย','สังขยาไข่เค็ม'],flavorLabel:'รสชาติ'},
-    {id:'t3',name:'โทสใหญ่ 149฿',price:149,flavors:['ฮั่นนี่โทส','ช็อคบานาน่า','ช็อคสตรอเบอรี่'],flavorLabel:'รสชาติ'},
+    {id:'t3',name:'โทสใหญ่ ฮันนี่ 149฿',price:149,flavors:['ฮั่นนี่โทส','ช็อคบานาน่า','ช็อคสตรอเบอรี่'],flavorLabel:'รสชาติ'},
     {id:'t4',name:'โทสใหญ่ สังขยา 159฿',price:159,flavors:['สังขยาใบเตย','สังขยาไข่เค็ม'],flavorLabel:'รสชาติ'}
   ]},
   {id:'pizza',name:'พิซซ่า',emoji:'🍕',items:[
-    {id:'pz1',name:'ขนมปังพิซซ่า',price:55,flavors:['ข้าวโพดชีส','ผักชีส','ไส้กรอกชีส'],flavorLabel:'หน้า'},
-    {id:'pz2',name:'พิซซ่าถาด',price:89,flavors:['ข้าวโพดชีส','ผักชีส','ไส้กรอกชีส'],flavorLabel:'หน้า'}
+    {id:'pz1',name:'ขนมปังพิซซ่า แฮม',price:49,addons:[{name:'เพิ่มชีส',price:20}]},
+    {id:'pz2',name:'ขนมปังพิซซ่า ไส้กรอก',price:49,addons:[{name:'เพิ่มชีส',price:20}]},
+    {id:'pz3',name:'ขนมปังพิซซ่า ข้าวโพดชีส',price:49,addons:[{name:'เพิ่มชีส',price:20}]},
+    {id:'pz4',name:'ขนมปังพิซซ่า ผักขมชีส',price:59,addons:[{name:'เพิ่มชีส',price:20}]},
+    {id:'pz5',name:'ขนมปังพิซซ่า ทะเล',price:69,addons:[{name:'เพิ่มชีส',price:20}]},
+    {id:'pz6',name:'พิซซ่าถาดเล็ก',price:79,flavors:['ไส้กรอก','แฮม','ผักขม (89฿)'],flavorLabel:'หน้า',addons:[{name:'เพิ่มชีส',price:20}]},
+    {id:'pz7',name:'พิซซ่าใหญ่',price:129,flavors:['ไส้กรอก','แฮม','ผักขม (139฿)'],flavorLabel:'หน้า',note:'รวมหน้าได้ เพิ่ม 20 บาท',addons:[{name:'เพิ่มชีส',price:20}]}
   ]},
   {id:'fried',name:'ของทอด',emoji:'🍟',items:[
     {id:'f1',name:'ชีสบอล',price:59},
@@ -335,16 +425,14 @@ var CATEGORIES = [
     {id:'wh7',name:'หัววิปมะม่วง',price:50}
   ]},
   {id:'topping',name:'ท็อปปิ้ง',emoji:'🍨',items:[
-    {id:'tp1',name:'ท็อปปิ้ง ไอศครีมวนิลา',price:15},
-    {id:'tp2',name:'ท็อปปิ้ง ไอศครีมช็อค',price:15},
-    {id:'tp3',name:'ท็อปปิ้ง ไอศครีมมัทฉะ',price:15},
+    {id:'tp10',name:'ท็อปปิ้ง วิปครีม',price:20},
+    {id:'tp_ice',name:'ไอศครีม 1 ลูก',price:15,flavors:['ช็อคโกแลต','สตรอเบอรี่','วนิลา','ชาเขียว','กะทิ'],flavorLabel:'รสชาติ'},
     {id:'tp4',name:'ท็อปปิ้ง บราวนี่',price:15},
     {id:'tp5',name:'ท็อปปิ้ง โอรีโอ้',price:15},
     {id:'tp6',name:'ท็อปปิ้ง ฝอยทอง',price:15},
     {id:'tp7',name:'ท็อปปิ้ง คอนเฟรค',price:15},
     {id:'tp8',name:'ท็อปปิ้ง มาสเมโล่',price:15},
     {id:'tp9',name:'ท็อปปิ้ง เจลลี่',price:15},
-    {id:'tp10',name:'ท็อปปิ้ง วิปครีม',price:20},
     {id:'tp11',name:'สังขยาใบเตย',price:20},
     {id:'tp12',name:'สังขยาไข่เค็ม',price:20},
     {id:'tp13',name:'นมข้น',price:5},
@@ -409,7 +497,8 @@ function buildMenu() {
       var row = document.createElement('div');
       row.className = 'menu-item';
       var priceText = item.variants ? '฿'+Math.min.apply(null,item.variants.map(function(v){return v.price;}))+'+ ' : '฿'+item.price;
-      var imgHtml = ITEM_IMAGES[item.id] ? '<img src="'+ITEM_IMAGES[item.id]+'" style="width:56px;height:56px;object-fit:cover;border-radius:8px;margin-right:10px;flex-shrink:0">' : '';
+      var imgSrc = ITEM_IMAGES[item.id] || SVG_IMAGES[item.id] || '';
+      var imgHtml = imgSrc ? '<img src="'+imgSrc+'" style="width:56px;height:56px;object-fit:cover;border-radius:8px;margin-right:10px;flex-shrink:0">' : '';
       row.innerHTML = imgHtml+'<div class="menu-left"><div class="menu-name">'+item.name+'</div></div>'
         +'<span class="menu-price">'+priceText+'</span>'
         +'<button class="add-btn">+</button>';
@@ -467,6 +556,41 @@ function openItemModal(item) {
     }, 0);
     currentSel.flavor = item.flavors[0];
   }
+  // Note
+  if (item.note) {
+    var noteDiv = document.createElement('div');
+    noteDiv.style.cssText = 'background:#fff8e1;border:1px solid #f5c842;border-radius:8px;padding:8px 12px;font-size:13px;color:#856404;margin-top:10px';
+    noteDiv.textContent = 'ℹ️ ' + item.note;
+    optsDiv.appendChild(noteDiv);
+  }
+  // Addons (เช่น เพิ่มชีส)
+  if (item.addons && item.addons.length) {
+    var aLbl = document.createElement('div'); aLbl.className='opt-label'; aLbl.textContent='ส่วนเพิ่ม (ไม่บังคับ)'; optsDiv.appendChild(aLbl);
+    currentSel.addons = [];
+    item.addons.forEach(function(addon) {
+      var row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0e8d8';
+      var left = document.createElement('span');
+      left.style.cssText = 'font-size:15px';
+      left.textContent = addon.name + ' (+฿' + addon.price + ')';
+      var toggle = document.createElement('button');
+      toggle.style.cssText = 'width:32px;height:32px;border-radius:50%;border:2px solid #ddd;background:#fff;font-size:18px;cursor:pointer;font-family:inherit';
+      toggle.textContent = '+';
+      var active = false;
+      toggle.onclick = function() {
+        active = !active;
+        toggle.style.background = active ? '#3b1f0a' : '#fff';
+        toggle.style.color = active ? '#fff' : '#000';
+        toggle.style.borderColor = active ? '#3b1f0a' : '#ddd';
+        toggle.textContent = active ? '✓' : '+';
+        if(active) currentSel.addons.push(addon);
+        else currentSel.addons = currentSel.addons.filter(function(a){return a.name!==addon.name;});
+        updateModalPrice();
+      };
+      row.appendChild(left); row.appendChild(toggle);
+      optsDiv.appendChild(row);
+    });
+  }
   updateModalPrice();
   document.getElementById('itemOverlay').classList.remove('hidden');
 }
@@ -487,7 +611,14 @@ function addOptGroup(parent, label, options, onSelect, defaultIdx) {
 function updateModalPrice() {
   var price = currentItem.price || 0;
   if (currentItem.variants && currentSel.variant) price = currentSel.variant.price;
-  document.getElementById('modalPrice').textContent = price * currentQty;
+  // Override price if flavor has price in parentheses e.g. "ผักขม (89฿)"
+  if (currentSel.flavor) {
+    var raw = String(currentSel.flavor);
+    var m = raw.match(/\((\d+)/);
+    if (m) price = parseInt(m[1]);
+  }
+  var addonTotal = (currentSel.addons||[]).reduce(function(s,a){return s+a.price;},0);
+  document.getElementById('modalPrice').textContent = (price + addonTotal) * currentQty;
 }
 function changeQty(d) { currentQty = Math.max(1,Math.min(10,currentQty+d)); document.getElementById('qtyNum').textContent = currentQty; updateModalPrice(); }
 function closeItemModal(e) { if(e.target===document.getElementById('itemOverlay')) closeItemModalBtn(); }
@@ -498,7 +629,15 @@ function addToCart() {
   var opts = [];
   if (currentSel.variant) { price = currentSel.variant.price; opts.push(currentSel.variant.label+' (฿'+price+')'); }
   if (currentSel.sweet) opts.push(currentSel.sweet);
-  if (currentSel.flavor) opts.push(currentSel.flavor);
+  if (currentSel.flavor) {
+    opts.push(currentSel.flavor);
+    var raw2 = String(currentSel.flavor);
+    var mf = raw2.match(/\((\d+)/);
+    if (mf) price = parseInt(mf[1]);
+  }
+  var addonTotal = 0;
+  (currentSel.addons||[]).forEach(function(a){ opts.push(a.name+' (+฿'+a.price+')'); addonTotal+=a.price; });
+  price = price + addonTotal;
   cart.push({name:currentItem.name, opts:opts, price:price, qty:currentQty});
   closeItemModalBtn();
   updateCartBar();
