@@ -823,50 +823,137 @@ function markPaid(tk){
 function renderSalesTab(){
   var div=document.getElementById('salesContent');
   div.innerHTML='<div style="text-align:center;padding:20px;color:#888">กำลังโหลด...</div>';
-  fetch(SCRIPT_URL+'?action=getOrders&t='+Date.now())
-    .then(function(r){return r.json();})
-    .then(function(orders){
-      var byDate={};
-      orders.forEach(function(o){
-        var ts=String(o.timestamp||'');
-        var dk='';
-        if(/^\d{2}\/\d{2}\/\d{4}/.test(ts)) dk=ts.substring(0,10);
-        else { try{var d=new Date(ts);var t=new Date(d.getTime()+7*60*60*1000);dk=pad(t.getUTCDate())+'/'+pad(t.getUTCMonth()+1)+'/'+t.getUTCFullYear();}catch(e){dk='ไม่ระบุ';} }
-        if(!dk) dk='ไม่ระบุ';
-        if(!byDate[dk]) byDate[dk]={total:0,count:0,paid:0,paidCount:0};
-        var amt=Number(o.total)||0;
-        byDate[dk].total+=amt; byDate[dk].count++;
-        if(o.status==='จ่ายแล้ว'){byDate[dk].paid+=amt;byDate[dk].paidCount++;}
-      });
-      var now=new Date();
-      var tn=new Date(now.getTime()+7*60*60*1000);
-      var todayKey=pad(tn.getUTCDate())+'/'+pad(tn.getUTCMonth()+1)+'/'+tn.getUTCFullYear();
-      var keys=Object.keys(byDate).sort(function(a,b){
-        var pa=a.split('/'),pb=b.split('/');
-        return new Date(pb[2],pb[1]-1,pb[0])-new Date(pa[2],pa[1]-1,pa[0]);
-      });
-      if(!keys.length){div.innerHTML='<p style="text-align:center;color:#888;padding:30px">ไม่มีข้อมูล</p>';return;}
-      div.innerHTML='';
-      keys.forEach(function(k){
-        var d=byDate[k];
-        var isToday=k===todayKey;
-        var card=document.createElement('div');
-        card.className='sale-card'+(isToday?' today':'');
-        card.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'
-          +'<div style="font-size:16px;font-weight:700;color:#3b1f0a">'+(isToday?'📅 วันนี้ ':'')+k+'</div>'
-          +'<div style="font-size:20px;font-weight:700;color:#27ae60">฿'+d.total+'</div>'
-          +'</div>'
-          +'<div style="font-size:13px;color:#888;margin-bottom:10px">'
-          +'ออเดอร์ทั้งหมด: '+d.count+' รายการ &nbsp;|&nbsp; จ่ายแล้ว: '+d.paidCount+' รายการ (฿'+d.paid+')'
-          +'</div>';
-        var pb=document.createElement('button');
-        pb.style.cssText='width:100%;background:#2980b9;color:#fff;border:none;border-radius:8px;padding:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit';
-        pb.textContent='🖨️ ปริ้นยอดขาย';
-        pb.onclick=(function(date,total,count){return function(){printDailySales(date,total,count);};})(k,d.total,d.count);
-        card.appendChild(pb);
-        div.appendChild(card);
-      });
-    }).catch(function(){div.innerHTML='<p style="text-align:center;color:#c0392b;padding:30px">โหลดไม่ได้</p>';});
+  Promise.all([
+    fetch(SCRIPT_URL+'?action=getOrders&t='+Date.now()).then(function(r){return r.json();}).catch(function(){return [];}),
+    fetch(SCRIPT_URL+'?action=getHistory&t='+Date.now()).then(function(r){return r.json();}).catch(function(){return [];})
+  ]).then(function(results){
+    var orders=(results[0]||[]).concat(results[1]||[]);
+    buildSalesUI(div, orders);
+  }).catch(function(){
+    div.innerHTML='<p style="text-align:center;color:#c0392b;padding:30px">โหลดไม่ได้</p>';
+  });
+}
+
+function buildSalesUI(div, orders){
+  // Group by date
+  var byDate={};
+  orders.forEach(function(o){
+    var ts=String(o.timestamp||'');
+    var dk='';
+    if(/^\d{2}\/\d{2}\/\d{4}/.test(ts)) dk=ts.substring(0,10);
+    else{try{var d=new Date(ts);var t=new Date(d.getTime()+7*60*60*1000);dk=pad(t.getUTCDate())+'/'+pad(t.getUTCMonth()+1)+'/'+t.getUTCFullYear();}catch(e){dk='ไม่ระบุ';}}
+    if(!dk) dk='ไม่ระบุ';
+    if(!byDate[dk]) byDate[dk]={total:0,count:0};
+    byDate[dk].total+=Number(o.total)||0;
+    byDate[dk].count++;
+  });
+
+  var now=new Date();
+  var tn=new Date(now.getTime()+7*60*60*1000);
+  var todayKey=pad(tn.getUTCDate())+'/'+pad(tn.getUTCMonth()+1)+'/'+tn.getUTCFullYear();
+
+  var keys=Object.keys(byDate).sort(function(a,b){
+    var pa=a.split('/'),pb=b.split('/');
+    return new Date(pb[2],pb[1]-1,pb[0])-new Date(pa[2],pa[1]-1,pa[0]);
+  });
+
+  // Get current filter
+  var filter = div.getAttribute('data-filter') || 'day';
+
+  // Filter keys based on selection
+  var filteredKeys = keys.filter(function(k){
+    if(filter==='day') return k===todayKey;
+    var pa=k.split('/');
+    var kDate=new Date(pa[2],pa[1]-1,pa[0]);
+    if(filter==='week'){
+      var weekAgo=new Date(tn.getTime()-7*24*60*60*1000);
+      weekAgo=new Date(weekAgo.getUTCFullYear(),weekAgo.getUTCMonth(),weekAgo.getUTCDate());
+      return kDate>=weekAgo;
+    }
+    if(filter==='month'){
+      return kDate.getFullYear()===tn.getUTCFullYear() && kDate.getMonth()===tn.getUTCMonth();
+    }
+    return true;
+  });
+
+  // Calc summary total
+  var sumTotal=0, sumCount=0;
+  filteredKeys.forEach(function(k){sumTotal+=byDate[k].total;sumCount+=byDate[k].count;});
+
+  // Build HTML
+  var html2='';
+
+  // Filter buttons
+  html2+='<div style="display:flex;gap:8px;margin-bottom:14px">';
+  var filters=[
+    {id:'day',label:'📅 วันนี้'},
+    {id:'week',label:'📆 สัปดาห์นี้'},
+    {id:'month',label:'🗓️ เดือนนี้'},
+    {id:'all',label:'📊 ทั้งหมด'}
+  ];
+  filters.forEach(function(f){
+    var active=filter===f.id;
+    html2+='<button onclick="setSalesFilter(\''+f.id+'\')" style="flex:1;padding:8px 4px;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;background:'+(active?'#3b1f0a':'#f0e8d8')+';color:'+(active?'#f5c842':'#3b1f0a')+'">'+f.label+'</button>';
+  });
+  html2+='</div>';
+
+  // Summary card
+  html2+='<div style="background:linear-gradient(135deg,#3b1f0a,#6d3a1a);border-radius:14px;padding:18px;margin-bottom:14px;color:#fff;text-align:center">';
+  html2+='<div style="font-size:13px;opacity:.8;margin-bottom:4px">ยอดรวม</div>';
+  html2+='<div style="font-size:32px;font-weight:700;color:#f5c842">฿'+sumTotal.toLocaleString()+'</div>';
+  html2+='<div style="font-size:13px;opacity:.8;margin-top:6px">'+sumCount+' ออเดอร์</div>';
+  html2+='</div>';
+
+  // Daily breakdown (show only if not "day" filter)
+  if(filteredKeys.length===0){
+    html2+='<p style="text-align:center;color:#888;padding:20px">ไม่มีข้อมูลช่วงนี้</p>';
+  } else if(filter!=='day'){
+    filteredKeys.forEach(function(k){
+      var d=byDate[k];
+      var isToday=k===todayKey;
+      html2+='<div style="background:'+(isToday?'#fef9e7':'#fff')+';border:'+(isToday?'2px solid #f5c842':'1px solid #eee')+';border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">';
+      html2+='<div><div style="font-size:14px;font-weight:700;color:#3b1f0a">'+(isToday?'📅 ':'')+k+'</div><div style="font-size:12px;color:#888;margin-top:2px">'+d.count+' ออเดอร์</div></div>';
+      html2+='<div style="font-size:18px;font-weight:700;color:#27ae60">฿'+d.total.toLocaleString()+'</div>';
+      html2+='</div>';
+    });
+  } else {
+    // Day view - show big and clear
+    var k=filteredKeys[0];
+    var d=byDate[k];
+    html2+='<div style="background:#fff;border-radius:10px;padding:14px;border:1px solid #eee">';
+    html2+='<div style="font-size:13px;color:#888;margin-bottom:8px">รายละเอียดวันนี้</div>';
+    html2+='<div style="display:flex;justify-content:space-between"><span>จำนวนออเดอร์</span><span style="font-weight:700">'+d.count+' รายการ</span></div>';
+    html2+='<div style="display:flex;justify-content:space-between;margin-top:6px"><span>ยอดขายรวม</span><span style="font-weight:700;color:#27ae60">฿'+d.total.toLocaleString()+'</span></div>';
+    html2+='</div>';
+  }
+
+  // Print button
+  html2+='<button onclick="printSalesSummary(\''+filter+'\','+sumTotal+','+sumCount+')" style="width:100%;background:#2980b9;color:#fff;border:none;border-radius:8px;padding:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:12px">🖨️ ปริ้นสรุปยอด</button>';
+
+  div.innerHTML=html2;
+  div.setAttribute('data-filter', filter);
+}
+
+function setSalesFilter(f){
+  var div=document.getElementById('salesContent');
+  div.setAttribute('data-filter',f);
+  renderSalesTab();
+}
+
+function printSalesSummary(period, total, count){
+  var labels={'day':'วันนี้','week':'สัปดาห์นี้','month':'เดือนนี้','all':'ทั้งหมด'};
+  var now=new Date();var t=new Date(now.getTime()+7*60*60*1000);
+  var ts=pad(t.getUTCDate())+'/'+pad(t.getUTCMonth()+1)+'/'+t.getUTCFullYear()+' '+pad(t.getUTCHours())+':'+pad(t.getUTCMinutes())+' น.';
+  var c='<div style="font-family:monospace;font-size:14px;padding:10px;max-width:300px;text-align:center">';
+  c+='<div style="font-size:16px;font-weight:bold;border-bottom:2px solid #000;padding-bottom:8px;margin-bottom:8px">หัวนม100%<br>สาขาประชาสงเคราะห์</div>';
+  c+='<div style="font-size:14px;font-weight:bold">สรุปยอดขาย: '+(labels[period]||period)+'</div>';
+  c+='<div style="border-top:1px dashed #000;border-bottom:1px dashed #000;padding:10px 0;margin:10px 0;text-align:left">';
+  c+='<div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>จำนวนออเดอร์</span><span>'+count+' รายการ</span></div>';
+  c+='<div style="display:flex;justify-content:space-between;font-size:16px;font-weight:bold;margin-top:6px"><span>ยอดรวม</span><span>฿'+total.toLocaleString()+'</span></div>';
+  c+='</div>';
+  c+='<div style="font-size:12px;color:#555">พิมพ์เมื่อ '+ts+'</div>';
+  c+='<div style="margin-top:10px">ขอบคุณ 🙏</div></div>';
+  doPrint(c);
 }
 
 function printOrder(o){
