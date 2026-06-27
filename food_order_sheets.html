@@ -108,6 +108,16 @@ body{font-family:Sarabun,sans-serif;background:#fdf6ee;color:#2c1a0e}
 .qritem{text-align:center;background:#fdf6ee;border-radius:8px;padding:12px}
 .qritem img{width:100%;max-width:120px}
 .qrlabel{font-size:13px;font-weight:bold;margin-top:6px}
+@media print{
+  .tabs,.catnav,.cartbar,.bill-float-btn,.stabs,#setupView,
+  .sbtn,.pay-btn,.oedit,.cancbtn,.no-print{display:none!important}
+  body{background:white;font-size:14px}
+  .print-slip{display:block!important}
+  .ocard{box-shadow:none;border:1px solid #ddd;break-inside:avoid}
+  .ocols{grid-template-columns:1fr}
+  .col-do,.col-done{display:none}
+}
+.print-slip{display:none}
 </style>
 </head>
 <body>
@@ -244,7 +254,7 @@ var MENU = [
   {id:'g3',name:'โอวัลติน',emoji:'🥤',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:SW},
   {id:'g4',name:'โคตรช็อค',emoji:'🍫',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:SW},
   {id:'g5',name:'ไมโล ยุค 90',emoji:'🥛',variants:[{label:'เย็น',price:55},{label:'ปั่น',price:65}],options:SW},
-  {id:'g6',name:'นมสดสตรอเบอรี่',emoji:'🍓',variants:[{label:'เย็น',price:59},{label:'ปั่น',price:69}],options:SW},
+  {id:'g6',name:'นมสดสตรอเบอรี่',emoji:'🍓',variants:[{label:'เย็น',price:59},{label:'ปั่น',price:69}],options:[{group:'นม',required:true,choices:['นมสด','กาแฟ','ชาเขียว','มัทฉะ','ชาไทย','โกโก้']},SW[0]]},
   {id:'g7',name:'ยูนิคอร์น',emoji:'🦄',variants:[{label:'เย็น',price:45},{label:'ปั่น+วิปครีม',price:69}],options:SW},
   {id:'g8',name:'สตรอเบอรี่ชีสเค้ก ปั่น',emoji:'🍰',price:69,options:SW},
   {id:'g9',name:'โกโก้บราวนี่ ปั่น',emoji:'🍫',price:69,options:SW},
@@ -292,7 +302,9 @@ var MENU = [
   {id:'b1',name:'บิงซู เล็ก',emoji:'🍧',price:79,options:[{group:'รสชาติ',required:true,choices:['นมสด','สตรอเบอรี่','โกโก้','ชาเขียว','ชาไทย','มะม่วง','นมชมพู']}]},
   {id:'b2',name:'บิงซู มือถือ',emoji:'🍧',price:119,options:[{group:'รสชาติ',required:true,choices:['นมสด โอรีโอ้','นมสด ไมโล โกโก้ครั้น','สตรอเบอรี่','โกโก้ บราวนี่','ชาเขียว บราวนี่','ชาไทย ฝอยทอง','มะม่วง','นมชมพู มาสเมโล่','ผลไม้รวม']}]},
   {id:'b3',name:'บิงซู ใหญ่',emoji:'🍧',price:159,options:[{group:'รสชาติ',required:true,choices:['นมสด โอรีโอ้','สตรอเบอรี่','โกโก้ บราวนี่','ชาเขียว บราวนี่','ชาไทย ฝอยทอง','มะม่วง','นมชมพู มาสเมโล่']}]},
-  {id:'py1',name:'ปังเย็น',emoji:'🧊',price:59,options:[{group:'รสชาติ',required:true,choices:['ชาไทย','ชาเขียว','โกโก้','นมสด','นมชมพู','สตรอเบอรี่','มะม่วง','กีวี่']},SW[0]]},
+  {id:'b4',name:'บิงซูโคตรเครื่อง',emoji:'🍧',price:199,options:[{group:'รสชาติ',required:true,choices:['มะม่วง','โกโก้','สตรอเบอรี่','นมชมพู','นมสด','ชาเขียว','ชาไทย']}]},
+  {id:'b5',name:'บิงซูมินิ',emoji:'🍧',price:89,options:[{group:'รสชาติ',required:true,choices:['มะม่วง','โกโก้','สตรอเบอรี่','นมชมพู','นมสด','ชาเขียว','ชาไทย']}]},
+  {id:'py1',name:'ปังเย็น',emoji:'🧊',price:59,options:[{group:'รสชาติ',required:true,choices:['ชาไทย','ชาเขียว','โกโก้','นมสด','นมชมพู','สตรอเบอรี่','มะม่วง','กีวี่']},SW[0],{group:'ท็อปปิ้ง',required:false,choices:['บราวนี่','โอรีโอ้','ฝอยทอง','คอนเฟรค','มาสเมโล่','โกโก้ครั้น']}]},
   {id:'kp1',name:'ขนมปังปิ้ง 2 แผ่น',emoji:'🍞',price:45,options:[{group:'แผ่นที่ 1',required:true,choices:['นมข้น','เนย-น้ำตาล','ซอสช็อค','คาราเมล','ซอสสตรอเบอรี่','นมข้น+ไมโล','นมข้น+โอวัลติน','พริกเผา+หมูหยอง']},{group:'แผ่นที่ 2',required:true,choices:['นมข้น','เนย-น้ำตาล','ซอสช็อค','คาราเมล','ซอสสตรอเบอรี่','นมข้น+ไมโล','นมข้น+โอวัลติน','พริกเผา+หมูหยอง']}]},
   {id:'kp2',name:'ขนมปังปิ้ง 1 แผ่น',emoji:'🍞',price:25,options:[{group:'หน้า',required:true,choices:['นมข้น','เนย-น้ำตาล','ซอสช็อค','คาราเมล','ซอสสตรอเบอรี่']}]},
   {id:'kp3',name:'ขนมปัง สังขยาใบเตย 1 แผ่น',emoji:'🍞',price:30},
@@ -302,7 +314,9 @@ var MENU = [
   {id:'kp7',name:'ขนมปัง กล้วยช็อค 1 แผ่น',emoji:'🍞',price:30},
   {id:'kp8',name:'ขนมปัง กล้วยช็อค 2 แผ่น',emoji:'🍞',price:50},
   {id:'kp9',name:'ขนมปังปิ้ง วิปครีม',emoji:'🍞',price:50,options:[{group:'หน้า',required:true,choices:['วิปโกโก้ครั้น','วิปบราวนี่','วิปคอนเฟรค','วิปสตรอเบอรี่','วิปโอรีโอ้','วิปไมโล','วิปฝอยทอง']}]},
-  {id:'kp10',name:'ขนมปังปิ้ง สติ๊ก',emoji:'🍞',price:79,options:[{group:'หน้า',required:true,choices:['นมข้น','สังขยาใบเตย','สังขยาไข่เค็ม','ซอสสตรอเบอรี่']}]},
+  {id:'kp11',name:'ปังวิป',emoji:'🍞',price:50,options:[{group:'หน้า',required:true,choices:['คอนเฟรค','โอรีโอ้','บราวนี่','สตรอเบอรี่']}]},
+  {id:'kp10',name:'ขนมปังปิ้ง สติ๊ก',emoji:'🍞',price:79,options:[{group:'หน้า',required:true,choices:['นมข้น','ซอสสตรอเบอรี่']}]},
+  {id:'kp12',name:'ปังสติ๊กสังขยา',emoji:'🍞',price:79,options:[{group:'สังขยา',required:true,choices:['สังขยาใบเตย','สังขยาไข่เค็ม']}]},
   {id:'pz1',name:'ขนมปังพิซซ่า ไส้กรอกไก่ชีส',emoji:'🍕',price:49},
   {id:'pz2',name:'ขนมปังพิซซ่า แฮมไก่ชีส',emoji:'🍕',price:49},
   {id:'pz3',name:'ขนมปังพิซซ่า ผักขมชีส',emoji:'🍕',price:59},
@@ -310,11 +324,12 @@ var MENU = [
   {id:'pz5',name:'ขนมปังพิซซ่า ข้าวโพดชีส',emoji:'🍕',price:49},
   {id:'pz6',name:'พิซซ่าถาดเล็ก 4 ชิ้น',emoji:'🍕',price:79},
   {id:'pz7',name:'พิซซ่าถาดใหญ่ 6 ชิ้น',emoji:'🍕',price:129},
-  {id:'pz8',name:'ผักขมอบชีส',emoji:'🫕',price:59},
-  {id:'pz9',name:'ข้าวโพดอบชีส',emoji:'🌽',price:49},
+  {id:'pz8',name:'ถ้วยผักขมอบชีส',emoji:'🫕',price:59},
+  {id:'pz9',name:'ถ้วยข้าวโพดอบชีส',emoji:'🌽',price:59},
   {id:'pz10',name:'ท็อปปิ้งพิซซ่า ชีส',emoji:'🧀',price:20},
   {id:'pz11',name:'ท็อปปิ้งพิซซ่า ไส้กรอก',emoji:'🌭',price:10},
   {id:'pz12',name:'ท็อปปิ้งพิซซ่า แฮม',emoji:'🥩',price:10},
+  {id:'wf0',name:'วาฟเฟิลเปล่า',emoji:'🧇',price:30},
   {id:'wf1',name:'วาฟเฟิล 119฿',emoji:'🧇',price:119,options:[{group:'รสชาติ',required:true,choices:['บราวนี่+ไอศครีมช็อค','โอรีโอ้+ไอศครีมช็อค','ฝอยทอง+ไอศครีมวนิลา','คอนเฟรค+ไอศครีมวนิลา']}]},
   {id:'wf2',name:'วาฟเฟิล 129฿',emoji:'🧇',price:129,options:[{group:'รสชาติ',required:true,choices:['สตรอเบอรี่+กล้วย']}]},
   {id:'wf3',name:'วาฟเฟิล 139฿',emoji:'🧇',price:139,options:[{group:'รสชาติ',required:true,choices:['มะม่วง+ไอศครีมกะทิ']}]},
@@ -352,11 +367,11 @@ var CATS = [
   {k:'สี่เสา',e:'🍧',ids:['g35','g36','g37','g38','g39','g40']},
   {k:'ของทอด',e:'🍟',ids:['f1','f2','f3','f4','f5','f6','f7']},
   {k:'ครอฟเฟิล',e:'🧇',ids:['cr1','cr2','cr3']},
-  {k:'บิงซู',e:'🍧',ids:['b1','b2','b3']},
+  {k:'บิงซู',e:'🍧',ids:['b1','b2','b3','b4','b5']},
   {k:'ปังเย็น',e:'🧊',ids:['py1']},
-  {k:'ขนมปัง',e:'🍞',ids:['kp1','kp2','kp3','kp4','kp5','kp6','kp7','kp8','kp9','kp10']},
+  {k:'ขนมปัง',e:'🍞',ids:['kp1','kp2','kp3','kp4','kp5','kp6','kp7','kp8','kp9','kp10','kp11','kp12']},
   {k:'พิซซ่า',e:'🍕',ids:['pz1','pz2','pz3','pz4','pz5','pz6','pz7','pz8','pz9','pz10','pz11','pz12']},
-  {k:'วาฟเฟิล',e:'🧇',ids:['wf1','wf2','wf3']},
+  {k:'วาฟเฟิล',e:'🧇',ids:['wf0','wf1','wf2','wf3']},
   {k:'วิปครีม',e:'🍦',ids:['wp1']},
   {k:'โทส',e:'🍞',ids:['t1','t2','t3','t4']},
   {k:'ท็อปปิ้ง',e:'🍨',ids:['tp1','tp2','tp3','tp4','tp5','tp6','tp7','tp8','tp9','tp10','tp11','tp12','tp13','tp14','tp15','tp16','tp17']}
@@ -539,10 +554,15 @@ async function showBill(){
   document.getElementById('successSc').classList.remove('show');
   document.getElementById('billSc').classList.add('show');
   document.getElementById('billTableLabel').textContent='โต๊ะ '+(table||'?');
+  document.getElementById('billItems').innerHTML='<p style="text-align:center;color:#888;padding:20px">กำลังโหลด...</p>';
+  document.getElementById('billGrandTotal').textContent='...';
   try{
-    var res=await fetch(API+'?action=getOrders');
-    var orders=await res.json();
-    var myOrders=orders.filter(function(o){return o.table==='โต๊ะ '+(table||'?')&&o.status!=='จ่ายแล้ว';});
+    var res=await fetch(API+'?action=getOrders&t='+Date.now());
+    var text=await res.text();
+    var orders=JSON.parse(text);
+    var myOrders=orders.filter(function(o){
+      return (o.table==='โต๊ะ '+(table||'?')) && o.status!=='จ่ายแล้ว';
+    });
     var allItems={},grandTotal=0;
     myOrders.forEach(function(o){
       if(o.items)o.items.forEach(function(i){
@@ -553,18 +573,24 @@ async function showBill(){
       });
     });
     var h='';
-    if(Object.keys(allItems).length===0){h='<p style="text-align:center;color:#888;padding:20px">ยังไม่มีรายการ</p>';}
-    else{
+    if(Object.keys(allItems).length===0){
+      h='<p style="text-align:center;color:#888;padding:20px">ยังไม่มีรายการสั่ง</p>';
+    } else {
       for(var k in allItems){
         var it=allItems[k];
         h+='<div class="bill-item"><div><div style="font-weight:bold">'+it.name+'</div>';
         if(it.options)h+='<div style="color:#888;font-size:13px">'+it.options+'</div>';
-        h+='<div style="color:#888;font-size:13px">x'+it.qty+'</div></div><div style="font-weight:bold;color:#c0392b">'+(it.qty*it.price)+'฿</div></div>';
+        h+='<div style="color:#888;font-size:13px">x'+it.qty+'</div></div>';
+        h+='<div style="font-weight:bold;color:#c0392b">'+(it.qty*it.price)+'฿</div></div>';
       }
     }
     document.getElementById('billItems').innerHTML=h;
     document.getElementById('billGrandTotal').textContent=grandTotal+'฿';
-  }catch(e){document.getElementById('billItems').innerHTML='<p style="color:red;text-align:center">โหลดไม่ได้</p>';}
+  }catch(e){
+    console.log('Bill error:', e);
+    document.getElementById('billItems').innerHTML='<p style="color:red;text-align:center">โหลดไม่ได้: '+e.message+'</p>';
+    document.getElementById('billGrandTotal').textContent='0฿';
+  }
 }
 
 function hideBill(){document.getElementById('billSc').classList.remove('show');}
@@ -611,7 +637,8 @@ function renderCards(orders,nxt,lbl,cls){
     var o=orders[i],it='';
     if(o.items)for(var j=0;j<o.items.length;j++)it+=(j>0?'<br>':'')+'• '+o.items[j].name+(o.items[j].options?' ['+o.items[j].options+']':'')+' x'+o.items[j].qty;
     h+='<div class="ocard"><div class="ocard-table">'+o.table+'</div><div class="ocard-time">'+fmtTime(o.timestamp)+'</div><div class="ocard-items">'+it+'</div><div class="ocard-price">฿'+o.total+'</div>';
-    if(nxt)h+='<button class="sbtn '+cls+'" data-id="'+o.id+'" data-nxt="'+nxt+'" onclick="updStatusBtn(this)">'+lbl+'</button>';
+    if(nxt)h+='<button class="sbtn '+cls+' no-print" data-id="'+o.id+'" data-nxt="'+nxt+'" onclick="updStatusBtn(this)">'+lbl+'</button>';
+    h+='<button onclick="printOrder('+JSON.stringify(o)+')" class="no-print" style="width:100%;padding:5px;background:#f5f5f5;border:1px solid #ddd;border-radius:6px;font-size:11px;cursor:pointer;margin-top:4px;font-family:Sarabun,sans-serif">🖨️ ปริ้นออเดอร์</button>';
     h+='</div>';
   }
   return h;
@@ -653,10 +680,67 @@ async function renderBillsByTable(){
       var tb=tables[t];
       h+='<div class="bill-card"><div class="bill-card-hdr"><span class="bill-card-table">'+t+'</span><span class="bill-card-total">฿'+tb.total+'</span></div><div class="bill-card-items">';
       for(var k in tb.items){var it=tb.items[k];h+='• '+it.name+(it.options?' ['+it.options+']':'')+' x'+it.qty+' = '+(it.qty*it.price)+'฿<br>';}
-      h+='</div><button class="pay-btn" data-t="'+t+'" onclick="markPaidBtn(this)">💳 รับชำระแล้ว — ฿'+tb.total+'</button></div>';
+      h+='</div><div style=\"display:flex;gap:8px\"><button class=\"pay-btn\" data-t="'+t+'" onclick=\"markPaidBtn(this)\">💳 รับชำระ ฿'+tb.total+'</button><button onclick=\"printBillBtn(this)\" data-t="'+t+'" data-total="'+tb.total+'" data-items="'+encodeURIComponent(JSON.stringify(tb.items))+'">🖨️ ปริ้นบิล</button></div></div>';
     }
     el.innerHTML=h;
   }catch(e){el.innerHTML='<p style="color:red;text-align:center">โหลดไม่ได้</p>';}
+}
+
+function printOrder(o){
+  var items='';
+  if(o.items) o.items.forEach(function(i){
+    items += i.name+(i.options?' ['+i.options+']':'')+' x'+i.qty+' = '+(i.qty*i.price)+'฿\n';
+  });
+  var win=window.open('','_blank','width=400,height=600');
+  win.document.write('<html><head><meta charset="UTF-8"><style>body{font-family:Sarabun,sans-serif;padding:16px;font-size:14px}h2{font-size:16px;margin-bottom:8px}pre{white-space:pre-wrap;font-family:Sarabun,sans-serif;font-size:14px;margin:8px 0}.total{font-size:18px;font-weight:bold;border-top:2px solid #000;padding-top:8px;margin-top:8px}.shop{text-align:center;margin-bottom:12px;border-bottom:2px solid #000;padding-bottom:8px}</style></head><body>');
+  win.document.write('<div class="shop"><strong>หัวนม100%</strong><br>สาขาประชาสงเคราะห์</div>');
+  win.document.write('<h2>'+o.table+'</h2>');
+  win.document.write('<p>เวลา: '+o.timestamp+'</p>');
+  win.document.write('<pre>'+items+'</pre>');
+  win.document.write('<div class="total">รวม: '+o.total+'฿</div>');
+  win.document.write('</body></html>');
+  win.document.close();
+  win.print();
+}
+
+function printBillBtn(btn){
+  var tableKey = btn.dataset.t;
+  var total = btn.dataset.total;
+  var items = JSON.parse(decodeURIComponent(btn.dataset.items));
+  var rows = '';
+  for(var k in items){
+    var it = items[k];
+    rows += it.name + (it.options?' ['+it.options+']':'') + ' x'+it.qty+' = '+(it.qty*it.price)+'฿\n';
+  }
+  var win = window.open('','_blank','width=400,height=600');
+  win.document.write('<html><head><meta charset="UTF-8"><style>body{font-family:Sarabun,sans-serif;padding:16px;font-size:16px}.shop{text-align:center;border-bottom:2px solid #000;padding-bottom:8px;margin-bottom:12px}pre{font-family:Sarabun,sans-serif;font-size:15px;white-space:pre-wrap}.total{font-size:20px;font-weight:bold;border-top:2px solid #000;padding-top:8px;margin-top:8px}.footer{text-align:center;margin-top:20px;font-size:13px}</style></head><body>');
+  win.document.write('<div class="shop"><strong>หัวนม100%</strong><br>สาขาประชาสงเคราะห์</div>');
+  win.document.write('<p><strong>'+tableKey+'</strong></p>');
+  win.document.write('<p>วันที่: '+new Date().toLocaleDateString("th-TH")+'</p>');
+  win.document.write('<pre>--------------------------------\n'+rows+'--------------------------------</pre>');
+  win.document.write('<div class="total">ยอดรวม: '+total+'฿</div>');
+  win.document.write('<div class="footer">ขอบคุณที่ใช้บริการ 🙏</div>');
+  win.document.write('</body></html>');
+  win.document.close();
+  setTimeout(function(){ win.print(); }, 500);
+}
+
+function printBill(tableKey, tb){
+  var items='';
+  for(var k in tb.items){
+    var it=tb.items[k];
+    items += it.name+(it.options?' ['+it.options+']':'')+' x'+it.qty+' = '+(it.qty*it.price)+'฿\n';
+  }
+  var win=window.open('','_blank','width=400,height=600');
+  win.document.write('<html><head><meta charset="UTF-8"><style>body{font-family:Sarabun,sans-serif;padding:16px;font-size:14px}h2{font-size:16px;margin-bottom:8px}pre{white-space:pre-wrap;font-family:Sarabun,sans-serif;font-size:14px;margin:8px 0}.total{font-size:20px;font-weight:bold;border-top:2px solid #000;padding-top:8px;margin-top:8px}.shop{text-align:center;margin-bottom:12px;border-bottom:2px solid #000;padding-bottom:8px}.footer{text-align:center;margin-top:16px;font-size:12px;color:#888}</style></head><body>');
+  win.document.write('<div class="shop"><strong>หัวนม100%</strong><br>สาขาประชาสงเคราะห์<br><small>Tel: </small></div>');
+  win.document.write('<h2>บิลรวม '+tableKey+'</h2>');
+  win.document.write('<pre>--------------------------------\n'+items+'--------------------------------</pre>');
+  win.document.write('<div class="total">ยอดรวม: '+tb.total+'฿</div>');
+  win.document.write('<div class="footer">ขอบคุณที่ใช้บริการ 🙏<br>หัวนม100% สาขาประชาสงเคราะห์</div>');
+  win.document.write('</body></html>');
+  win.document.close();
+  win.print();
 }
 
 async function markPaidBtn(btn){
