@@ -433,8 +433,7 @@ window.onload=function(){
   document.getElementById('sheetUrl').value=API;
   renderMenus();
   if(table&&!isStaff){
-    startBillCheck();
-    // แสดงปุ่มดูบิลทันทีเมื่อเปิดหน้า
+    // ไม่เรียก startBillCheck ตอนเปิดหน้า — จะเรียกหลังส่งออเดอร์เท่านั้น
     document.getElementById('billFloatBtn').style.display='block';
   }
 };
@@ -588,6 +587,7 @@ async function submitOrder(){
     document.getElementById('successSc').classList.add('show');
     hasSentOrder=true;
     cart={};updAllBadges();updCart();
+    startBillCheck(); // เริ่ม polling หลังส่งออเดอร์สำเร็จเท่านั้น
   }catch(e){document.getElementById('sendSc').classList.remove('show');alert('เกิดข้อผิดพลาด กรุณาลองใหม่');}
 }
 
@@ -642,6 +642,7 @@ async function showBill(){
 function hideBill(){document.getElementById('billSc').classList.remove('show');}
 
 function startBillCheck(){
+  clearInterval(billInt);
   billInt=setInterval(async function(){
     try{
       var res=await fetch(API+'?action=checkPaid&table='+encodeURIComponent('โต๊ะ '+table));
@@ -649,7 +650,11 @@ function startBillCheck(){
       if(data.paid){
         clearInterval(billInt);
         document.getElementById('billSc').classList.remove('show');
-        document.getElementById('thankyouSc').classList.add('show');
+        // แค่แสดงข้อความสั้นๆ แล้ว reset หน้าใหม่ ไม่เด้งหน้าขอบคุณ
+        cart={};updAllBadges();updCart();
+        hasSentOrder=false;
+        document.getElementById('billFloatBtn').style.display='block';
+        alert('ชำระเงินเรียบร้อยแล้ว ขอบคุณที่ใช้บริการ 🙏');
       }
     }catch(e){}
   },5000);
