@@ -31,7 +31,7 @@ body{font-family:Sarabun,sans-serif;background:#fdf6ee;color:#2c1a0e}
 .cartbar.visible{transform:translateY(0)}
 .cartbtn{background:#f5c842;color:#2c1a0e;border:none;padding:10px 16px;border-radius:8px;font-weight:bold;cursor:pointer;font-size:14px;font-family:Sarabun,sans-serif}
 .bill-float-btn{position:fixed;bottom:70px;right:16px;background:#27ae60;color:white;border:none;padding:10px 16px;border-radius:25px;font-size:14px;font-weight:bold;cursor:pointer;font-family:Sarabun,sans-serif;box-shadow:0 3px 10px rgba(0,0,0,.3);z-index:99;display:none}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400}
 .overlay.open{display:flex;align-items:flex-end}
 .modal{background:white;border-radius:20px 20px 0 0;padding:20px;width:100%;max-height:80vh;overflow-y:auto}
 .modal h2{font-size:17px;margin-bottom:14px}
@@ -57,7 +57,7 @@ body{font-family:Sarabun,sans-serif;background:#fdf6ee;color:#2c1a0e}
 .oedit.d{background:#fee;color:#c0392b;font-size:11px}
 .oqty{font-size:14px;font-weight:bold;min-width:20px;text-align:center}
 .ototal{display:flex;justify-content:space-between;padding:12px 0;font-size:16px;font-weight:bold}
-.fullscreen{display:none;position:fixed;inset:0;z-index:300;flex-direction:column}
+.fullscreen{display:none;position:fixed;inset:0;z-index:350;flex-direction:column}
 .fullscreen.show{display:flex}
 .bill-hdr{background:#2c1a0e;color:#f5c842;padding:20px;text-align:center}
 .bill-body{flex:1;overflow-y:auto;padding:16px;background:#fdf6ee}
@@ -551,10 +551,11 @@ function renderOrder(){
   var keys=Object.keys(cart),h='',tot=0;
   for(var i=0;i<keys.length;i++){
     var k=keys[i],item=cart[k],sub=item.qty*item.price;
+    var ek=k.replace(/'/g,"\\'");
     h+='<div class="oitem"><div class="oitem-info"><div class="oitem-name">'+item.name+'</div>';
     if(item.options)h+='<div class="oitem-opt">'+item.options+'</div>';
     h+='<div class="oitem-price">'+sub+'฿</div></div>';
-    h+='<div class="oitem-ctrl"><button class="oedit m" onclick="editItem('+JSON.stringify(k)+',-1)">-</button><span class="oqty">'+item.qty+'</span><button class="oedit p" onclick="editItem('+JSON.stringify(k)+',1)">+</button><button class="oedit d" onclick="editItem('+JSON.stringify(k)+',0)">X</button></div></div>';
+    h+='<div class="oitem-ctrl"><button class="oedit m" onclick="editItem(\''+ek+'\',-1)">-</button><span class="oqty">'+item.qty+'</span><button class="oedit p" onclick="editItem(\''+ek+'\',1)">+</button><button class="oedit d" onclick="editItem(\''+ek+'\',0)">X</button></div></div>';
     tot+=sub;
   }
   document.getElementById('oItems').innerHTML=h;
