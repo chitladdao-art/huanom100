@@ -306,6 +306,7 @@ var MENU = [
   {id:'g11',name:'นมสดโอรีโอ้',emoji:'🥛',variants:[{label:'ปั่น',price:55},{label:'ปั่น+วิป',price:69}],options:SW},
   {id:'g12',name:'มัทฉะนมสด',emoji:'🍵',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:SW},
   {id:'g13',name:'กาแฟนมสด',emoji:'☕',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:SW},
+  {id:'g20',name:'บิสคอฟ Biscoff',emoji:'🍪',variants:[{label:'เย็น',price:59},{label:'ปั่น',price:69}],options:[{group:'รสชาติ',required:true,choices:['โกโก้','มัทฉะ','นมสด','กาแฟ']},SW[0]]},
   {id:'g14',name:'ชาไทย',emoji:'🧋',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:SW},
   {id:'g15',name:'ชาเขียว',emoji:'🍵',variants:[{label:'เย็น',price:45},{label:'ปั่น',price:55}],options:SW},
   {id:'g16',name:'ชาเขียวมัทฉะ (นมโอ๊ต)',emoji:'🍵',price:49,options:SW},
@@ -340,6 +341,8 @@ var MENU = [
   {id:'f5',name:'เฟรนฟราย เขย่าผง',emoji:'🍟',price:59,options:[{group:'ผง',required:true,choices:['ชีส','บาบีคิว','หม่าล่า','ซาวครีม','ปาปีก้า']}]},
   {id:'f6',name:'เฟรนฟราย ชีสดิป เขย่าผง',emoji:'🍟',price:79,options:[{group:'ผง',required:true,choices:['ชีส','บาบีคิว','หม่าล่า','ซาวครีม','ปาปีก้า']}]},
   {id:'f7',name:'เฟรนฟราย ชีสพ่นไฟ เขย่าผง',emoji:'🔥',price:79,options:[{group:'ผง',required:true,choices:['ชีส','บาบีคิว','หม่าล่า','ซาวครีม','ปาปีก้า']}]},
+  {id:'f8',name:'ไส้กรอกแดงทอด',emoji:'🌭',price:49,options:[{group:'ผง',required:true,choices:['ชีส','บาบีคิว','หม่าล่า','ซาวครีม','ปาปีก้า']}]},
+  {id:'f9',name:'ชีสดิป',emoji:'🧀',price:20},
   {id:'cr1',name:'ครอฟเฟิล เปล่า',emoji:'🧇',price:35},
   {id:'cr2',name:'ครอฟเฟิล วิปครีม',emoji:'🧇',price:55,options:[{group:'หน้า',required:true,choices:['มะม่วง','คอนเฟรค+คาราเมล','สตรอเบอรี่','กีวี่','กล้วยช็อค','บราวนี่']}]},
   {id:'cr3',name:'ครอฟเฟิล ชุดเซต',emoji:'🧇',price:109,options:[{group:'รสชาติ',required:true,choices:['ช็อคโกแลต','สตรอเบอรี่','วนิลา']}]},
@@ -387,6 +390,9 @@ var MENU = [
   {id:'tp2',name:'มาสเมโล่',emoji:'☁️',price:15},
   {id:'tp3',name:'บราวนี่',emoji:'🍫',price:15},
   {id:'tp4',name:'วิปครีม (ท็อปปิ้ง)',emoji:'🍦',price:20},
+  {id:'nm1',name:'ไส้กรอกแดงทอด',emoji:'🌭',price:49,options:[{group:'ผง',required:true,choices:['ชีส','บาบีคิว','หม่าล่า','ซาวครีม','ปาปีก้า']}]},
+  {id:'nm2',name:'ซุปเห็ด',emoji:'🍄',price:59},
+  {id:'nm3',name:'ปูอัดวาซาบิ',emoji:'🦀',price:59},
   {id:'tp5',name:'ฝอยทอง',emoji:'✨',price:15},
   {id:'tp6',name:'คอนเฟรค',emoji:'🌾',price:15},
   {id:'tp7',name:'โอรีโอ้',emoji:'⚫',price:15},
@@ -403,14 +409,14 @@ var MENU = [
 ];
 
 var CATS = [
-  {k:'นมสด',e:'🥛',ids:['g1','g2','g3','g4','g5','g6','g7','g8','g9','g10','g11','g12','g13']},
+  {k:'นมสด',e:'🥛',ids:['g1','g2','g3','g4','g5','g6','g7','g8','g9','g10','g11','g12','g13','g20']},
   {k:'น้ำชง',e:'🧋',ids:['g14','g15']},
   {k:'นมโอ๊ต',e:'🌿',ids:['g16','g17','g18','g19']},
   {k:'สมูทตี้',e:'🥤',ids:['g20','g21','g22']},
   {k:'โซดา',e:'🫧',ids:['g23','g24','g25','g26','g27','g28','g29','g30','g31']},
   {k:'มะพร้าวโฟม',e:'🥥',ids:['g32','g33','g34']},
   {k:'สี่เสา',e:'🍧',ids:['g35','g36','g37','g38','g39','g40']},
-  {k:'ของทอด',e:'🍟',ids:['f1','f2','f3','f4','f5','f6','f7']},
+  {k:'ของทอด',e:'🍟',ids:['f1','f2','f3','f4','f5','f6','f7','f8','f9']},
   {k:'ครอฟเฟิล',e:'🧇',ids:['cr1','cr2','cr3']},
   {k:'บิงซู',e:'🍧',ids:['b1','b2','b3','b4','b5','b6']},
   {k:'ปังเย็น',e:'🧊',ids:['py1']},
@@ -419,7 +425,8 @@ var CATS = [
   {k:'วาฟเฟิล',e:'🧇',ids:['wf0','wf1','wf2','wf3']},
   {k:'วิปครีม',e:'🍦',ids:['wp1']},
   {k:'โทส',e:'🍞',ids:['t1','t2','t3','t4']},
-  {k:'ท็อปปิ้ง',e:'🍨',ids:['tp1','tp2','tp3','tp4','tp5','tp6','tp7','tp8','tp9','tp10','tp11','tp12','tp13','tp14','tp15','tp16','tp17']}
+  {k:'ท็อปปิ้ง',e:'🍨',ids:['tp1','tp2','tp3','tp4','tp5','tp6','tp7','tp8','tp9','tp10','tp11','tp12','tp13','tp14','tp15','tp16','tp17']},
+  {k:'เมนูใหม่',e:'✨',ids:['nm1','nm2','nm3']}
 ];
 
 function getItem(id){for(var i=0;i<MENU.length;i++)if(MENU[i].id===id)return MENU[i];return null;}
